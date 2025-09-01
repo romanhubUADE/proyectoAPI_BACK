@@ -20,7 +20,7 @@ public class User {
     private String email;
     private String password;
 
-    @Column(nullable = false, unique = true)
+    @Column
     private String lastName;
 
     @OneToMany(mappedBy = "user")
