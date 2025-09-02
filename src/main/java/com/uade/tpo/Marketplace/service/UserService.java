@@ -3,6 +3,8 @@ package com.uade.tpo.Marketplace.service;
 import com.uade.tpo.Marketplace.entity.Role;
 import com.uade.tpo.Marketplace.entity.User;
 import com.uade.tpo.Marketplace.repository.UserRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,9 +13,9 @@ import java.util.List;
 @Service
 @Transactional
 public class UserService {
+    @Autowired
+    private  UserRepository repo;
 
-    private final UserRepository repo;
-    public UserService(UserRepository repo) { this.repo = repo; }
 
     @Transactional(readOnly = true)
     public List<User> findAll() { return repo.findAll(); }

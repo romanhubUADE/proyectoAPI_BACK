@@ -3,16 +3,16 @@ package com.uade.tpo.Marketplace.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Data 
-@Builder 
-@NoArgsConstructor 
+@Data
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "categories")
+@Table(name = "category")
 public class Category {
     @Id
-
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     private String description;

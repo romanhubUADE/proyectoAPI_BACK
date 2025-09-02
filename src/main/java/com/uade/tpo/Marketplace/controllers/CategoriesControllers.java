@@ -2,6 +2,8 @@ package com.uade.tpo.Marketplace.controllers;
 
 import com.uade.tpo.Marketplace.entity.Category;
 import com.uade.tpo.Marketplace.service.CategoryService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,13 +11,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/categories")
 public class CategoriesControllers {
-
-    private final CategoryService categoryService;
-
-    // Inyección de dependencias por constructor
-    public CategoriesControllers(CategoryService categoryService) {
-        this.categoryService = categoryService;
-    }
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping
     public List<Category> getCategories() {
@@ -23,7 +20,7 @@ public class CategoriesControllers {
     }
 
     @GetMapping("/{categoryId}")
-    public Category getCategoryById(@PathVariable int categoryId) {
+    public Category getCategoryById(@PathVariable Long categoryId) {
         return categoryService.getCategoryById(categoryId);
     }
 

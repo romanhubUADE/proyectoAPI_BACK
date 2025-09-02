@@ -1,4 +1,3 @@
-// Product.java
 package com.uade.tpo.Marketplace.entity;
 
 import jakarta.persistence.*;
@@ -16,4 +15,8 @@ public class Product {
     private String name;
     private Double price;
     private int stock;
+    private String description;
+    @ManyToOne @JoinColumn(name="category_id", nullable=false)
+    private Category category;
+
 }

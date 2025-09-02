@@ -2,6 +2,8 @@ package com.uade.tpo.Marketplace.controllers;
 
 import com.uade.tpo.Marketplace.entity.Order;
 import com.uade.tpo.Marketplace.service.OrderService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.net.URI;
@@ -10,9 +12,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
-
-  private final OrderService service;
-  public OrderController(OrderService service){ this.service = service; }
+    @Autowired
+    private OrderService service;
 
   @GetMapping public List<Order> list(){ return service.findAll(); }
   @GetMapping("/{id}") public Order get(@PathVariable Long id){ return service.findById(id); }
@@ -21,9 +22,5 @@ public class OrderController {
     Order created = service.create(body);
     return ResponseEntity.created(URI.create("/api/orders/"+created.getId())).body(created);
   }
-  @PutMapping("/{id}") public Order update(@PathVariable Long id, @RequestBody Order body){ return service.update(id, body); }
-  @DeleteMapping("/{id}") public ResponseEntity<Void> delete(@PathVariable Long id){
-    service.delete(id);
-    return ResponseEntity.noContent().build();
-  }
+  
 }

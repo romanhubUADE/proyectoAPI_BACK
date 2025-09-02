@@ -3,6 +3,8 @@ package com.uade.tpo.Marketplace.controllers;
 import com.uade.tpo.Marketplace.entity.Role;
 import com.uade.tpo.Marketplace.entity.User;
 import com.uade.tpo.Marketplace.service.UserService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,14 +12,11 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users") // 👈 Ojo: el prefijo es /api/users
+@RequestMapping("/api/users") // Ojo: el prefijo es /api/users
 public class UserController {
 
-    private final UserService service;
-
-    public UserController(UserService service) {
-        this.service = service;
-    }
+    @Autowired
+    private UserService service;
 
     // Obtener todos los usuarios
     @GetMapping

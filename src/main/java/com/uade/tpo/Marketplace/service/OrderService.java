@@ -4,6 +4,8 @@ import com.uade.tpo.Marketplace.entity.Order;
 import com.uade.tpo.Marketplace.entity.User;
 import com.uade.tpo.Marketplace.repository.OrderRepository;
 import com.uade.tpo.Marketplace.repository.UserRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,13 +15,10 @@ import java.util.List;
 @Transactional
 public class OrderService {
 
-  private final OrderRepository repo;
-  private final UserRepository userRepo;
-
-  public OrderService(OrderRepository repo, UserRepository userRepo){
-    this.repo = repo;
-    this.userRepo = userRepo;
-  }
+    @Autowired
+    private OrderRepository repo;
+    @Autowired
+    private UserRepository userRepo;
 
   @Transactional(readOnly = true)
   public List<Order> findAll(){ return repo.findAll(); }
@@ -34,7 +33,7 @@ public class OrderService {
     if (o.getUser() == null || o.getUser().getId() == null) {
       throw new IllegalArgumentException("User id is required");
     }
-    // ✅ cargar entidad real (no proxy)
+    //  cargar entidad real (no proxy)
     User user = userRepo.findById(o.getUser().getId())
         .orElseThrow(() -> new IllegalArgumentException("User not found: " + o.getUser().getId()));
 

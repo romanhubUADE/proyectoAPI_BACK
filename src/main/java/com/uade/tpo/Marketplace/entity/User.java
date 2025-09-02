@@ -24,7 +24,7 @@ public class User {
     private String lastName;
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore   // 🚀 Evita la serialización infinita
+    @JsonIgnore   //  Evita la serialización infinita
     private List<Order> orders;
 
     @Enumerated(EnumType.STRING)
