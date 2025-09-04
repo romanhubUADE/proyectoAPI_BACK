@@ -1,8 +1,13 @@
 package com.uade.tpo.Marketplace.controllers;
 
 import com.uade.tpo.Marketplace.entity.Role;
-import com.uade.tpo.Marketplace.entity.User;
+
 import com.uade.tpo.Marketplace.service.UserService;
+import com.uade.tpo.Marketplace.entity.dtos.UserCreateDTO;
+import com.uade.tpo.Marketplace.entity.dtos.UserUpdateDTO;
+import com.uade.tpo.Marketplace.entity.dtos.UserResponseDTO;
+
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,53 +17,38 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users") // Ojo: el prefijo es /api/users
+@RequestMapping("/api/users")
 public class UserController {
+  @Autowired private UserService service;
 
-    @Autowired
-    private UserService service;
+  @GetMapping
+  public List<UserResponseDTO> list() { return service.findAll(); }
 
-    // Obtener todos los usuarios
-    @GetMapping
-    public List<User> list() {
-        return service.findAll();
-    }
+  @GetMapping("/{id}")
+  public UserResponseDTO get(@PathVariable Long id) { return service.findById(id); }
 
-    // Obtener usuario por ID
-    @GetMapping("/{id}")
-    public User get(@PathVariable Long id) {
-        return service.findById(id);
-    }
+  @GetMapping("/by-email")
+  public UserResponseDTO byEmail(@RequestParam String email) { return service.findByEmail(email); }
 
-    // Obtener usuario por email
-    @GetMapping("/by-email")
-    public User byEmail(@RequestParam String email) {
-        return service.findByEmail(email);
-    }
+  @PostMapping
+  public ResponseEntity<UserResponseDTO> create(@Valid @RequestBody UserCreateDTO body) {
+    var created = service.create(body);
+    return ResponseEntity.created(URI.create("/api/users/" + created.id())).body(created);
+  }
 
-    // Crear usuario
-    @PostMapping
-    public ResponseEntity<User> create(@RequestBody User body) {
-        User created = service.create(body);
-        return ResponseEntity.created(URI.create("/api/users/" + created.getId())).body(created);
-    }
+  @PutMapping("/{id}")
+  public UserResponseDTO update(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO body) {
+    return service.update(id, body);
+  }
 
-    // Actualizar usuario
-    @PutMapping("/{id}")
-    public User update(@PathVariable Long id, @RequestBody User body) {
-        return service.update(id, body);
-    }
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> delete(@PathVariable Long id) {
+    service.delete(id);
+    return ResponseEntity.noContent().build();
+  }
 
-    // Borrar usuario
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        service.delete(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    // Cambiar rol de usuario (ej: USER -> ADMIN)
-    @PatchMapping("/{id}/role")
-    public User changeRole(@PathVariable Long id, @RequestParam Role role) {
-        return service.changeRole(id, role);
-    }
+  @PatchMapping("/{id}/role")
+  public UserResponseDTO changeRole(@PathVariable Long id, @RequestParam Role role) {
+    return service.changeRole(id, role);
+  }
 }

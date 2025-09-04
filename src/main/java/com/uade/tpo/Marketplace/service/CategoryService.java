@@ -1,11 +1,15 @@
 package com.uade.tpo.Marketplace.service;
 
+import com.uade.tpo.Marketplace.Exceptions.CategoryDuplicateException;
 import com.uade.tpo.Marketplace.entity.Category;
+import com.uade.tpo.Marketplace.entity.dtos.*;
 import com.uade.tpo.Marketplace.repository.CategoryRepository;
-
+import com.uade.tpo.Marketplace.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+import static org.springframework.http.HttpStatus.*;
 
 import java.util.List;
 
@@ -13,30 +17,44 @@ import java.util.List;
 @Transactional
 public class CategoryService {
 
+    private static final long GENERAL_CATEGORY_ID = 1L;
+
     @Autowired
-    private CategoryRepository repo;
+    private CategoryRepository categoryRepo;
+
+    @Autowired
+    private ProductRepository productRepo;
+
+      @Transactional(readOnly = true)
+  public List<CategoryResponseDTO> findAll() {
+    return categoryRepo.findAll().stream().map(this::toDto).toList();
+  }
 
     @Transactional(readOnly = true)
-    public List<Category> getCategories() {
-        return repo.findAll();
-    }
+  public CategoryResponseDTO findById(Long id) {
+    var c = categoryRepo.findById(id)
+        .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Category not found: " + id));
+    return toDto(c);
+  }
 
-    @Transactional(readOnly = true)
-    public Category getCategoryById(Long categoryId) {
-        return repo.findById(categoryId)
-                   .orElseThrow(() -> new IllegalArgumentException("Category not found: " + categoryId));
-    }
+  public CategoryResponseDTO create(CategoryCreateDTO dto) throws CategoryDuplicateException {
+    if (categoryRepo.existsByDescription(dto.description())) throw new CategoryDuplicateException();
+    var c = new Category();
+    c.setDescription(dto.description());
+    return toDto(categoryRepo.save(c));
+  }
 
-    public Category createCategory(Category entity) {
-        // si usás ID autogenerado, asegurate de nullificarlo:
-        // entity.setId(0);
-        return repo.save(entity);
-        
-    }
-    public void deleteCategory(long categoryId) {
-    if (!repo.existsById(categoryId)) {
-        throw new IllegalArgumentException("Category not found: " + categoryId);
-    }
-    repo.deleteById(categoryId);
-}
+  public void delete(Long id) {
+    if (!categoryRepo.existsById(id))
+      throw new ResponseStatusException(NOT_FOUND, "La categoria no existe: " + id);
+    if (id == GENERAL_CATEGORY_ID)
+      throw new ResponseStatusException(BAD_REQUEST, "No se puede borrar la categoria General");
+
+    productRepo.reassignCategory(id, GENERAL_CATEGORY_ID);
+    categoryRepo.deleteById(id);
+  }
+
+  private CategoryResponseDTO toDto(Category c) {
+    return new CategoryResponseDTO(c.getId(), c.getDescription());
+  }
 }

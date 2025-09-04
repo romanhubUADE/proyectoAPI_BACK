@@ -38,5 +38,7 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     private List<Total_Discount> discounts = new ArrayList<>();
+
+    
 }
 
