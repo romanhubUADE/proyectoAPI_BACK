@@ -1,17 +1,22 @@
 package com.uade.tpo.Marketplace.service;
 
-import com.uade.tpo.Marketplace.Exceptions.CategoryDuplicateException;
-import com.uade.tpo.Marketplace.entity.Category;
-import com.uade.tpo.Marketplace.entity.dtos.*;
-import com.uade.tpo.Marketplace.repository.CategoryRepository;
-import com.uade.tpo.Marketplace.repository.ProductRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-import static org.springframework.http.HttpStatus.*;
 
-import java.util.List;
+import com.uade.tpo.Marketplace.Exceptions.CategoryDuplicateException;
+import com.uade.tpo.Marketplace.entity.Category;
+import com.uade.tpo.Marketplace.entity.dtos.CategoryCreateDTO;
+import com.uade.tpo.Marketplace.entity.dtos.CategoryResponseDTO;
+import com.uade.tpo.Marketplace.repository.CategoryRepository;
+import com.uade.tpo.Marketplace.repository.ProductRepository;
+
+import jakarta.annotation.PostConstruct;
 
 @Service
 @Transactional
@@ -24,6 +29,16 @@ public class CategoryService {
 
     @Autowired
     private ProductRepository productRepo;
+
+
+    @PostConstruct
+    public void initGeneralCategory() {
+        if (categoryRepo.count() == 0) {
+            Category general = new Category();
+            general.setDescription("General");
+            categoryRepo.save(general);  // la BD le dará id=1
+        }
+      }
 
       @Transactional(readOnly = true)
   public List<CategoryResponseDTO> findAll() {
