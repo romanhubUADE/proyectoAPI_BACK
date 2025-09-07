@@ -5,6 +5,9 @@ import com.uade.tpo.Marketplace.entity.Category;
 import com.uade.tpo.Marketplace.entity.dtos.*;
 import com.uade.tpo.Marketplace.repository.CategoryRepository;
 import com.uade.tpo.Marketplace.repository.ProductRepository;
+
+import jakarta.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +27,15 @@ public class CategoryService {
 
     @Autowired
     private ProductRepository productRepo;
+
+    @PostConstruct
+    public void initGeneralCategory() {
+        if (categoryRepo.count() == 0) {
+            Category general = new Category();
+            general.setDescription("General");
+            categoryRepo.save(general);  // la BD le dará id=1
+        }
+      }
 
       @Transactional(readOnly = true)
   public List<CategoryResponseDTO> findAll() {
