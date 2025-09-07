@@ -7,5 +7,6 @@ public record ProductResponseDTO(
     Double price,
     int stock,
     Long categoryId,
-    String categoryDescription
+    String categoryDescription,
+    Boolean activo
 ) {}

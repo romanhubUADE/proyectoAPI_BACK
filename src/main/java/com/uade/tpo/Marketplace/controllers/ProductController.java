@@ -52,11 +52,19 @@ public class ProductController {
     public ProductResponseDTO partialUpdate(@PathVariable Long id,
                                         @Valid @RequestBody ProductUpdateDTO dto) {
     return service.partialUpdate(id, dto);
-}
+    
+}   
 
-    // Eliminar producto
+    @PatchMapping("/{id}/activar")
+    public ResponseEntity<Void> activar(@PathVariable Long id) {
+        service.activar(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
+    // Eliminar producto (Baja Logica)
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> bajaLogica(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

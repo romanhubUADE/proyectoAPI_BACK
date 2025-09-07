@@ -30,14 +30,15 @@ public class ProductService {
     return new ProductResponseDTO(
         p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.getStock(),
         p.getCategory()!=null ? p.getCategory().getId() : null,
-        p.getCategory()!=null ? p.getCategory().getDescription() : null
+        p.getCategory()!=null ? p.getCategory().getDescription() : null,
+        p.getActivo()
     );
   }
 
     @Transactional(readOnly = true)
-    public List<ProductResponseDTO> findAll(){
-        return repo.findAll().stream().map(this::toDto).toList();
-  }
+    public List<ProductResponseDTO> findAll() {
+        return repo.findByActivoTrue().stream().map(this::toDto).toList();
+    }
 
 
     @Transactional(readOnly = true)
@@ -76,9 +77,19 @@ public class ProductService {
     return toDto(repo.save(p));
 }
 
-    public void delete(Long id){
-        if (!repo.existsById(id)) throw new ResponseStatusException(NOT_FOUND, "El producto no existe: " + id);
-    repo.deleteById(id);
-  }
+    public void delete(Long id) {
+        var p = repo.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "El producto no existe: " + id));
+        p.setActivo(false);   // baja lógica
+        repo.save(p);
+    }
+
+    public void activar(Long id) {
+        var p = repo.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "El producto no existe: " + id));
+        p.setActivo(true);   //Activa producto dado de baja
+        repo.save(p);
+    }
+
 
 }
