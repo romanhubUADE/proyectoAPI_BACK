@@ -44,6 +44,7 @@ public class CompraService {
     o = orderRepo.save(o);
 
     double total = 0.0;
+    int totalQuantity = 0;   //para contar la cantidad total de productos comprados
 
     for (var it : dto.items()){
       var p = productRepo.findById(it.productId())
@@ -62,6 +63,12 @@ public class CompraService {
       orderProductRepo.save(op);
 
       total += p.getPrice() * it.quantity();
+      totalQuantity += it.quantity();  // acumulamos cantidad
+    }
+
+    // Aplicar descuento si corresponde
+    if (totalQuantity >= 3) {
+        total = total * 0.85;  // aplicar 15% de descuento
     }
 
     o.setTotal(Math.round(total));      // si cambias a Double, usa o.setTotal(total)
