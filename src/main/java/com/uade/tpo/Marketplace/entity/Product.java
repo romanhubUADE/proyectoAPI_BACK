@@ -19,4 +19,9 @@ public class Product {
     @ManyToOne @JoinColumn(name="category_id", nullable=false)
     private Category category;
 
+    //Campo para Baja logica de Producto
+    @Column(nullable = false)
+    private Boolean activo = true;
+
+
 }

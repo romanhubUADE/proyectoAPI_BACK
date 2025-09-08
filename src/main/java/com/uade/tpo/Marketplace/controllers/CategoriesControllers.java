@@ -1,7 +1,6 @@
 package com.uade.tpo.Marketplace.controllers;
 
 import com.uade.tpo.Marketplace.Exceptions.CategoryDuplicateException;
-import com.uade.tpo.Marketplace.entity.Category;
 import com.uade.tpo.Marketplace.entity.dtos.CategoryCreateDTO;
 import com.uade.tpo.Marketplace.entity.dtos.CategoryResponseDTO;
 import com.uade.tpo.Marketplace.service.CategoryService;

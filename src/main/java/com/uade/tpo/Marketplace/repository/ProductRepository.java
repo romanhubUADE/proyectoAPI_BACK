@@ -1,6 +1,9 @@
 package com.uade.tpo.Marketplace.repository;
 
 import com.uade.tpo.Marketplace.entity.Product;
+
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,4 +15,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Modifying
     @Query("update Product p set p.category.id = :newId where p.category.id = :oldId")
     void reassignCategory(@Param("oldId") Long oldId, @Param("newId") Long newId);
+
+    List<Product> findByActivoTrue();
 }

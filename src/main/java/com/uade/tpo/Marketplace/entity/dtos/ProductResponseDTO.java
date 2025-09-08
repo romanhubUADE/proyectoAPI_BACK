@@ -1,5 +1,8 @@
 package com.uade.tpo.Marketplace.entity.dtos;
 
+import java.util.List;
+
+
 public record ProductResponseDTO(
     Long id,
     String name,
@@ -7,5 +10,7 @@ public record ProductResponseDTO(
     Double price,
     int stock,
     Long categoryId,
-    String categoryDescription
+    String categoryDescription,
+    Boolean activo,
+    List<ProductImageDTO> images
 ) {}
