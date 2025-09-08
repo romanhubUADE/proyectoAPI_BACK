@@ -1,6 +1,16 @@
 package com.uade.tpo.Marketplace.service;
 
+
+import com.uade.tpo.Marketplace.Exceptions.CategoryDuplicateException;
+import com.uade.tpo.Marketplace.entity.Category;
+import com.uade.tpo.Marketplace.entity.dtos.*;
+import com.uade.tpo.Marketplace.repository.CategoryRepository;
+import com.uade.tpo.Marketplace.repository.ProductRepository;
+
+import jakarta.annotation.PostConstruct;
+
 import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
@@ -9,14 +19,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.uade.tpo.Marketplace.Exceptions.CategoryDuplicateException;
-import com.uade.tpo.Marketplace.entity.Category;
+
 import com.uade.tpo.Marketplace.entity.dtos.CategoryCreateDTO;
 import com.uade.tpo.Marketplace.entity.dtos.CategoryResponseDTO;
-import com.uade.tpo.Marketplace.repository.CategoryRepository;
-import com.uade.tpo.Marketplace.repository.ProductRepository;
 
-import jakarta.annotation.PostConstruct;
 
 @Service
 @Transactional
@@ -29,6 +35,7 @@ public class CategoryService {
 
     @Autowired
     private ProductRepository productRepo;
+
 
 
     @PostConstruct

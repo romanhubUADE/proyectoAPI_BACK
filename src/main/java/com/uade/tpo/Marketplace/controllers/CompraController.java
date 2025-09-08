@@ -12,17 +12,24 @@ import java.util.List;
 @RequestMapping("/api/compras")
 public class CompraController {
     
-    @Autowired 
-    private CompraService CompraService;
+  @Autowired 
+  private CompraService compraService;
 
-    @GetMapping public List<CompraResponseDTO> list(){ return CompraService.findAll(); }
+  // USER autenticado: ver sus compras
+  @GetMapping("/mias")
+  public List<CompraResponseDTO> myOrders(org.springframework.security.core.Authentication auth) {
+    return compraService.findMineByEmail(auth.getName()); // auth.getName() = email del token
+  }
 
-    @GetMapping("/{id}") public CompraResponseDTO get(@PathVariable Long id){ return CompraService.findById(id); }
+  // ADMIN: ya existentes
+  @GetMapping public List<CompraResponseDTO> list(){ return compraService.findAll(); }
+  @GetMapping("/{id}") public CompraResponseDTO get(@PathVariable Long id){ return compraService.findById(id); }
 
-    @PostMapping
-    public ResponseEntity<CompraResponseDTO> create(@Valid @RequestBody CompraCreateDTO dto){
-        var c = CompraService.create(dto);
-        return ResponseEntity.created(URI.create("/api/compras/" + c.id())).body(c);
-    }
+  // USER autenticado: crear su compra (recomendado)
+  @PostMapping
+  public ResponseEntity<CompraResponseDTO> create(@Valid @RequestBody CompraCreateDTO dto,
+                                                  org.springframework.security.core.Authentication auth){
+    var c = compraService.createForEmail(auth.getName(), dto);
+    return ResponseEntity.created(URI.create("/api/compras/" + c.id())).body(c);
+  }
 }
-

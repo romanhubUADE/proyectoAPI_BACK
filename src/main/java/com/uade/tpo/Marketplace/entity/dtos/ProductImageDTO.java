@@ -1,8 +1,8 @@
 package com.uade.tpo.Marketplace.entity.dtos;
 
 public record ProductImageDTO(
-        Long id,
-        String fileName,
-        String contentType,
-        String base64Data
+    Long id,
+    String fileName,
+    String contentType,
+    String url
 ) {}
