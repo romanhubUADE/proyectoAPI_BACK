@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -26,6 +27,7 @@ public class CategoriesControllers {
   @GetMapping("/{id}")
   public CategoryResponseDTO get(@PathVariable Long id) { return categoryService.findById(id); }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @PostMapping
   public ResponseEntity<CategoryResponseDTO> create(@Valid @RequestBody CategoryCreateDTO dto)
       throws CategoryDuplicateException {
