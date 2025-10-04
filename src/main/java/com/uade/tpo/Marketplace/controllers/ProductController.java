@@ -30,7 +30,6 @@ public class ProductController {
         return service.findById(id);
     }
 
-    // POST JSON clásico
     @PostMapping
     public ResponseEntity<ProductResponseDTO> create(@Valid @RequestBody ProductCreateDTO dto)
             throws ProductDuplicateException {
@@ -38,7 +37,6 @@ public class ProductController {
         return ResponseEntity.created(URI.create("/api/products/" + created.id())).body(created);
     }
 
-    // ---------- NUEVO: crear producto + imágenes en una sola request ----------
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ProductResponseDTO> createWithImages(
             @RequestParam String name,

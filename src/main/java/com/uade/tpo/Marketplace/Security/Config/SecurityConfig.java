@@ -24,31 +24,38 @@ public class SecurityConfig {
   private AuthenticationProvider authProvider;
 
 @Bean
-public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-  http.csrf(csrf -> csrf.disable())
-      .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-      .authorizeHttpRequests(auth -> auth
-          // público: navegar catálogo
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http.csrf(csrf -> csrf.disable())
+        .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .authorizeHttpRequests(auth -> auth
+          // público
           .requestMatchers("/api/v1/auth/**").permitAll()
-          .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/products/**", "/api/category/**").permitAll()
+          .requestMatchers(org.springframework.http.HttpMethod.GET,
+              "/api/products/**",
+              "/categories/**",                 
+              "/api/products/*/images/**").permitAll()
 
-          // USER autenticado: su cuenta y compras
+          // usuario autenticado
           .requestMatchers("/api/compras/mias", "/api/orders/mias").authenticated()
-          .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/compras/**", "/api/orders/**").authenticated()
-          // si tenés endpoints tipo /api/users/me, agrégalos aquí:
-          // .requestMatchers("/api/users/me").authenticated()
+          .requestMatchers(org.springframework.http.HttpMethod.POST,
+              "/api/compras/**", "/api/orders/**").authenticated()
 
-          // ADMIN: gestión y vistas globales
-          .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/products/**", "/api/category/**").hasAuthority("ADMIN")
-          .requestMatchers(org.springframework.http.HttpMethod.PUT,"/api/products/**", "/api/category/**").hasAuthority("ADMIN")
-          .requestMatchers(org.springframework.http.HttpMethod.DELETE, "/api/products/**", "/api/category/**").hasAuthority("ADMIN")
-          .requestMatchers(org.springframework.http.HttpMethod.GET,"/api/users/**", "/api/compras/**", "/api/orders/**").hasAuthority("ADMIN")
+          // ADMIN obligatorio
+          .requestMatchers(org.springframework.http.HttpMethod.POST,
+              "/api/products/**", "/categories/**", "/api/users/**").hasAuthority("ADMIN")
+          .requestMatchers(org.springframework.http.HttpMethod.PUT,
+              "/api/products/**", "/categories/**", "/api/users/**").hasAuthority("ADMIN")
+          .requestMatchers(org.springframework.http.HttpMethod.PATCH,
+              "/api/products/**", "/categories/**", "/api/users/**").hasAuthority("ADMIN")
+          .requestMatchers(org.springframework.http.HttpMethod.DELETE,
+              "/api/products/**", "/categories/**", "/api/users/**").hasAuthority("ADMIN")
+          .requestMatchers(org.springframework.http.HttpMethod.GET,
+              "/api/users/**", "/api/compras/**", "/api/orders/**").hasAuthority("ADMIN")
 
-          // resto: requiere login
           .anyRequest().authenticated()
-      )
-      .authenticationProvider(authProvider)
-      .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-  return http.build();
-}
+        )
+        .authenticationProvider(authProvider)
+        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+    return http.build();
+  }
 }

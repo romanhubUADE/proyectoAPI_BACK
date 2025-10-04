@@ -26,7 +26,6 @@ public class ProductImageController {
         return ResponseEntity.ok(service.saveImage(productId, file));
     }
 
-    // <-- REACTIVAR ESTE GET BINARIO
     @GetMapping("/{imageId}")
     public ResponseEntity<byte[]> getImage(@PathVariable Long productId, @PathVariable Long imageId) {
         var image = service.getImage(imageId);

@@ -24,7 +24,6 @@ public class ProductService {
     @Autowired private CategoryRepository categoryRepo;
     @Autowired private ProductImageRepository productImageRepo;
 
-    // ---------- NUEVO: crear producto + imágenes ----------
     public ProductResponseDTO createWithImages(String name, String description, Double price,
                                                Integer stock, Long categoryId,
                                                List<MultipartFile> files)
@@ -50,7 +49,7 @@ public class ProductService {
                 var img = new ProductImage();
                 img.setFileName(f.getOriginalFilename());
                 img.setContentType(f.getContentType());
-                img.setData(f.getBytes());   // BLOB
+                img.setData(f.getBytes());  
                 img.setProduct(saved);
                 productImageRepo.save(img);
             }
@@ -58,7 +57,6 @@ public class ProductService {
         return toDto(saved);
     }
 
-    // ---------- existentes ----------
     private ProductResponseDTO toDto(Product p){
         List<ProductImageDTO> images = productImageRepo.findByProductId(p.getId())
                 .stream().map(this::toImageDto).toList();

@@ -43,7 +43,7 @@ public class CategoryService {
         if (categoryRepo.count() == 0) {
             Category general = new Category();
             general.setDescription("General");
-            categoryRepo.save(general);  // la BD le dará id=1
+            categoryRepo.save(general);  
         }
       }
 
