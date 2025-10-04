@@ -1,4 +1,3 @@
-// OrderItemDTO.java
 package com.uade.tpo.Marketplace.entity.dtos;
 
 public record OrderItemDTO(

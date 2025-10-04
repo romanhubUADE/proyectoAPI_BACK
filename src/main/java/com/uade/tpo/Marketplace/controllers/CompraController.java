@@ -15,17 +15,14 @@ public class CompraController {
   @Autowired 
   private CompraService compraService;
 
-  // USER autenticado: ver sus compras
   @GetMapping("/mias")
   public List<CompraResponseDTO> myOrders(org.springframework.security.core.Authentication auth) {
-    return compraService.findMineByEmail(auth.getName()); // auth.getName() = email del token
+    return compraService.findMineByEmail(auth.getName()); 
   }
 
-  // ADMIN: ya existentes
   @GetMapping public List<CompraResponseDTO> list(){ return compraService.findAll(); }
   @GetMapping("/{id}") public CompraResponseDTO get(@PathVariable Long id){ return compraService.findById(id); }
 
-  // USER autenticado: crear su compra (recomendado)
   @PostMapping
   public ResponseEntity<CompraResponseDTO> create(@Valid @RequestBody CompraCreateDTO dto,
                                                   org.springframework.security.core.Authentication auth){

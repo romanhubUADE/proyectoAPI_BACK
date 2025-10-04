@@ -21,7 +21,6 @@ public class OrderService {
   @Autowired private OrderRepository repo;
   @Autowired private UserRepository userRepo;
 
-  // ---------- CRUD ENTIDADES ----------
 
   @Transactional(readOnly = true)
   public List<Order> findAll() { return repo.findAll(); }

@@ -14,23 +14,34 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationService {
 
-  @Autowired private UserRepository repo;
+ @Autowired private UserRepository repo;
   @Autowired private PasswordEncoder encoder;
   @Autowired private JwtService jwt;
   @Autowired private AuthenticationManager authManager;
 
   public AuthenticationResponse register(RegisterRequest req) {
+    boolean firstUser = repo.count() == 0;
+
+    Role roleToSet;
+    if (firstUser && "ADMIN".equalsIgnoreCase(req.role())) {
+      roleToSet = Role.ADMIN; 
+    } else {
+      roleToSet = Role.USER;   
+    }
+
     User user = User.builder()
         .firstName(req.firstName())
         .lastName(req.lastName())
         .email(req.email())
         .password(encoder.encode(req.password()))
-        .role(Role.valueOf(req.role().toUpperCase()))
+        .role(roleToSet)
         .build();
+
     repo.save(user);
     return new AuthenticationResponse(jwt.generateToken(user));
   }
 
+  // Login normal
   public AuthenticationResponse authenticate(AuthenticationRequest req) {
     authManager.authenticate(new UsernamePasswordAuthenticationToken(req.email(), req.password()));
     User user = repo.findByEmail(req.email()).orElseThrow();

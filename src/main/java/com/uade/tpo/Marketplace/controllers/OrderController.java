@@ -23,10 +23,13 @@ public class OrderController {
     @Autowired
     private OrderService service;
 
-    // --- GETs en DTO ---
     @GetMapping
     public List<OrderResponseDTO> list() {
         return service.findAllDto();
+    }
+    @GetMapping("/mias")
+        public List<OrderResponseDTO> myOrders(org.springframework.security.core.Authentication auth) {
+        return service.findDtosMineByEmail(auth.getName());
     }
 
     @GetMapping("/{id}")
@@ -39,7 +42,6 @@ public class OrderController {
         return service.findDtosByUserId(userId);
     }
 
-    // --- POST (si querés, luego también podés devolver DTO) ---
     @PostMapping
     public ResponseEntity<Order> create(@RequestBody Order body) {
         Order created = service.create(body);

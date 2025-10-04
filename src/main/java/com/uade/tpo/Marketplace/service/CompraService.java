@@ -40,19 +40,16 @@ public class CompraService {
     return toDto(o);
   }
 
-  // compras del usuario autenticado (email viene del token)
   @Transactional(readOnly = true)
   public List<CompraResponseDTO> findMineByEmail(String email) {
     return orderRepo.findAllByUserEmail(email).stream().map(this::toDto).toList();
   }
 
-  // compras por userId (para ADMIN)
   @Transactional(readOnly = true)
   public List<CompraResponseDTO> findByUserId(Long userId) {
     return orderRepo.findAllByUser_Id(userId).stream().map(this::toDto).toList();
   }
 
-  // crear compra usando userId del DTO (para ADMIN o flujos internos)
   public CompraResponseDTO create(CompraCreateDTO dto) {
     var user = userRepo.findById(dto.userId())
         .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Usuario no encontrado: " + dto.userId()));
@@ -92,7 +89,6 @@ public class CompraService {
     return toDto(o);
   }
 
-  // crear compra para el usuario autenticado (ignora cualquier userId del DTO)
   public CompraResponseDTO createForEmail(String email, CompraCreateDTO dto) {
     var user = userRepo.findByEmail(email)
         .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Usuario no encontrado: " + email));
