@@ -1,14 +1,18 @@
 package com.uade.tpo.Marketplace.Security.Config;
 
-import com.uade.tpo.Marketplace.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.*;
-import org.springframework.security.authentication.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.core.userdetails.*;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.uade.tpo.Marketplace.repository.UserRepository;
 
 @Configuration
 public class ApplicationConfig {
@@ -18,7 +22,9 @@ public class ApplicationConfig {
 
   @Bean
   public UserDetailsService userDetailsService() {
+    System.out.println("hola");
     return username -> userRepository.findByEmail(username)
+  
         .orElseThrow(() -> new UsernameNotFoundException("User not found"));
   }
 
