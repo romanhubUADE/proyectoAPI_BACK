@@ -1,20 +1,28 @@
 package com.uade.tpo.Marketplace.service;
-import com.uade.tpo.Marketplace.Exceptions.ProductDuplicateException;
-import com.uade.tpo.Marketplace.entity.Product;
-import com.uade.tpo.Marketplace.entity.ProductImage;
-import com.uade.tpo.Marketplace.entity.dtos.*;
-import com.uade.tpo.Marketplace.repository.*;
+import java.io.IOException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.io.IOException;
-import java.util.List;
+import com.uade.tpo.Marketplace.Exceptions.ProductDuplicateException;
+import com.uade.tpo.Marketplace.entity.Product;
+import com.uade.tpo.Marketplace.entity.ProductImage;
+import com.uade.tpo.Marketplace.entity.dtos.ProductCreateDTO;
+import com.uade.tpo.Marketplace.entity.dtos.ProductImageDTO;
+import com.uade.tpo.Marketplace.entity.dtos.ProductResponseDTO;
+import com.uade.tpo.Marketplace.entity.dtos.ProductUpdateDTO;
+import com.uade.tpo.Marketplace.repository.CategoryRepository;
+import com.uade.tpo.Marketplace.repository.ProductImageRepository;
+import com.uade.tpo.Marketplace.repository.ProductRepository;
 
-import static org.springframework.http.HttpStatus.*;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 @Transactional
@@ -57,18 +65,32 @@ public class ProductService {
         return toDto(saved);
     }
 
-    private ProductResponseDTO toDto(Product p){
-        List<ProductImageDTO> images = productImageRepo.findByProductId(p.getId())
-                .stream().map(this::toImageDto).toList();
 
-        return new ProductResponseDTO(
-                p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.getStock(),
-                p.getCategory()!=null ? p.getCategory().getId() : null,
-                p.getCategory()!=null ? p.getCategory().getDescription() : null,
-                p.getActivo(),
-                images
-        );
-    }
+    private ProductResponseDTO toDto(Product p){
+    List<ProductImageDTO> images = productImageRepo.findByProductId(p.getId())
+            .stream().map(this::toImageDto).toList();
+
+    Integer percent = getDiscountPercent(p);           // <- calcula % vigente
+    String descuento = (percent != null && percent > 0)
+            ? "descuento de " + percent + "%"
+            : null;
+
+    return new ProductResponseDTO(
+            p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.getStock(),
+            p.getCategory()!=null ? p.getCategory().getId() : null,
+            p.getCategory()!=null ? p.getCategory().getDescription() : null,
+            p.getActivo(),
+            images,
+            descuento                                        // <- nuevo campo
+    );
+}
+
+    private Integer getDiscountPercent(Product p) {
+        
+        return 0;  
+}
+
+    
 
     private ProductImageDTO toImageDto(ProductImage img) {
         String url = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -84,7 +106,19 @@ public class ProductService {
                 img.getContentType(),
                 url
         );
+
     }
+    @Transactional
+    public void addToStock(Long id, int delta) {
+    if (delta == 0) return;
+    int updated = repo.addToStock(id, delta); // usar 'repo'
+    if (updated == 0) throw new EntityNotFoundException("producto no encontrado");
+
+    Product p = repo.findById(id).orElseThrow(); // tipar como Product
+    if (p.getStock() < 0) throw new IllegalStateException("stock no puede ser negativo");
+}
+
+
 
     @Transactional(readOnly = true)
     public List<ProductResponseDTO> findAll() {
