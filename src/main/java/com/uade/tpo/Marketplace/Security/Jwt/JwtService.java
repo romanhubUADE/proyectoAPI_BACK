@@ -6,6 +6,8 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.GrantedAuthority;
+
 
 import java.security.Key;
 import java.util.Date;
@@ -26,8 +28,13 @@ public class JwtService {
   public <T> T extractClaim(String token, Function<Claims, T> resolver) { return resolver.apply(parse(token)); }
 
   public String generateToken(UserDetails user) {
+    // authorities -> ["ADMIN"] o ["USER"]
+    var auths = user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
+    var role  = auths.isEmpty() ? null : auths.get(0);
+
     return Jwts.builder()
-        .setClaims(Map.of())
+        .claim("authorities", auths)   // <- NUEVO
+        .claim("role", role)           // <- NUEVO (comodín para el front)
         .setSubject(user.getUsername())
         .setIssuedAt(new Date())
         .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
