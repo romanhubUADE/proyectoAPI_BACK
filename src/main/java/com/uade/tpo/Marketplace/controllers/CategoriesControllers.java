@@ -33,7 +33,7 @@ public class CategoriesControllers {
   @GetMapping("/{id}")
   public CategoryResponseDTO get(@PathVariable Long id) { return categoryService.findById(id); }
 
-  @PreAuthorize("hasRole('ADMIN')")
+  @PreAuthorize("hasAuthority('ADMIN')")
   @PostMapping
   public ResponseEntity<CategoryResponseDTO> create(@Valid @RequestBody CategoryCreateDTO dto)
       throws CategoryDuplicateException {
