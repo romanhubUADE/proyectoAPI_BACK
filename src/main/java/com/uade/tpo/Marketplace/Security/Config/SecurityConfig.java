@@ -1,7 +1,8 @@
 // src/main/java/com/uade/tpo/Marketplace/Security/Config/SecurityConfig.java
 package com.uade.tpo.Marketplace.Security.Config;
 
-import com.uade.tpo.Marketplace.Security.Jwt.JwtAuthenticationFilter;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,9 +14,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.*;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.List;
+import com.uade.tpo.Marketplace.Security.Jwt.JwtAuthenticationFilter;
 
 @Configuration
 @EnableMethodSecurity
@@ -37,7 +40,8 @@ public class SecurityConfig {
         // público
         .requestMatchers("/api/v1/auth/**").permitAll()
         .requestMatchers(HttpMethod.GET,
-            "/api/products/**",
+            "/api/products",        // <- singular
+            "/api/products/**",     // <- recursivo
             "/categories/**",
             "/api/products/*/images/**"
         ).permitAll()
@@ -46,14 +50,27 @@ public class SecurityConfig {
         .requestMatchers("/api/compras/mias", "/api/orders/mias").authenticated()
         .requestMatchers(HttpMethod.POST, "/api/compras/**", "/api/orders/**").authenticated()
 
-        // SOLO ADMIN para ABM
-        .requestMatchers(HttpMethod.POST,   "/api/products/**", "/categories/**", "/api/users/**").hasAuthority("ADMIN")
-        .requestMatchers(HttpMethod.PUT,    "/api/products/**", "/categories/**", "/api/users/**").hasAuthority("ADMIN")
-        .requestMatchers(HttpMethod.PATCH,  "/api/products/**", "/categories/**", "/api/users/**").hasAuthority("ADMIN")
-        .requestMatchers(HttpMethod.DELETE, "/api/products/**", "/categories/**", "/api/users/**").hasAuthority("ADMIN")
-        .requestMatchers(HttpMethod.GET,    "/api/users/**", "/api/compras/**", "/api/orders/**").hasAuthority("ADMIN")
+        // ADMIN (acepta ADMIN y ROLE_ADMIN)
+        .requestMatchers(HttpMethod.POST,
+            "/api/products", "/api/products/**",
+            "/categories/**", "/api/users/**"
+        ).hasAnyAuthority("ADMIN","ROLE_ADMIN")
+        .requestMatchers(HttpMethod.PUT,
+            "/api/products", "/api/products/**",
+            "/categories/**", "/api/users/**"
+        ).hasAnyAuthority("ADMIN","ROLE_ADMIN")
+        .requestMatchers(HttpMethod.PATCH,
+            "/api/products", "/api/products/**",
+            "/categories/**", "/api/users/**"
+        ).hasAnyAuthority("ADMIN","ROLE_ADMIN")
+        .requestMatchers(HttpMethod.DELETE,
+            "/api/products", "/api/products/**",
+            "/categories/**", "/api/users/**"
+        ).hasAnyAuthority("ADMIN","ROLE_ADMIN")
+        .requestMatchers(HttpMethod.GET,
+            "/api/users/**", "/api/compras/**", "/api/orders/**"
+        ).hasAnyAuthority("ADMIN","ROLE_ADMIN")
 
-        // cualquier otra ruta requiere sesión
         .anyRequest().authenticated()
       )
       .authenticationProvider(authProvider)
@@ -67,7 +84,7 @@ public class SecurityConfig {
     CorsConfiguration c = new CorsConfiguration();
     c.setAllowedOrigins(List.of("http://localhost:5173", "http://127.0.0.1:5173"));
     c.setAllowedMethods(List.of("GET","POST","PUT","PATCH","DELETE","OPTIONS"));
-    c.setAllowedHeaders(List.of("*")); // incluye Authorization
+    c.setAllowedHeaders(List.of("*"));
     c.setExposedHeaders(List.of("Authorization","Content-Type"));
     c.setAllowCredentials(true);
 
