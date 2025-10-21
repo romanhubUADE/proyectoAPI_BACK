@@ -22,7 +22,7 @@ import com.uade.tpo.Marketplace.service.CategoryService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("api/categories")
 public class CategoriesControllers {
     @Autowired
     private CategoryService categoryService;
