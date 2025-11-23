@@ -42,7 +42,8 @@ public class SecurityConfig {
         .requestMatchers(HttpMethod.GET,
             "/api/products",        // <- singular
             "/api/products/**",     // <- recursivo
-            "/categories/**",
+            "/api/categories",
+            "/api/categories/**",
             "/api/products/*/images/**"
         ).permitAll()
 
