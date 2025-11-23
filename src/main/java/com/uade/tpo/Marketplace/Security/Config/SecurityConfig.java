@@ -52,25 +52,29 @@ public class SecurityConfig {
         .requestMatchers(HttpMethod.POST, "/api/compras/**", "/api/orders/**").authenticated()
 
         // ADMIN (acepta ADMIN y ROLE_ADMIN)
-        .requestMatchers(HttpMethod.POST,
-            "/api/products", "/api/products/**",
-            "/categories/**", "/api/users/**"
-        ).hasAnyAuthority("ADMIN","ROLE_ADMIN")
-        .requestMatchers(HttpMethod.PUT,
-            "/api/products", "/api/products/**",
-            "/categories/**", "/api/users/**"
-        ).hasAnyAuthority("ADMIN","ROLE_ADMIN")
-        .requestMatchers(HttpMethod.PATCH,
-            "/api/products", "/api/products/**",
-            "/categories/**", "/api/users/**"
-        ).hasAnyAuthority("ADMIN","ROLE_ADMIN")
-        .requestMatchers(HttpMethod.DELETE,
-            "/api/products", "/api/products/**",
-            "/categories/**", "/api/users/**"
-        ).hasAnyAuthority("ADMIN","ROLE_ADMIN")
-        .requestMatchers(HttpMethod.GET,
-            "/api/users/**", "/api/compras/**", "/api/orders/**"
-        ).hasAnyAuthority("ADMIN","ROLE_ADMIN")
+.requestMatchers(HttpMethod.POST,
+    "/api/products", "/api/products/**",
+    "/api/categories", "/api/categories/**",
+    "/api/users/**"
+).hasAnyAuthority("ADMIN","ROLE_ADMIN")
+
+.requestMatchers(HttpMethod.PUT,
+    "/api/products", "/api/products/**",
+    "/api/categories", "/api/categories/**",
+    "/api/users/**"
+).hasAnyAuthority("ADMIN","ROLE_ADMIN")
+
+.requestMatchers(HttpMethod.PATCH,
+    "/api/products", "/api/products/**",
+    "/api/categories", "/api/categories/**",
+    "/api/users/**"
+).hasAnyAuthority("ADMIN","ROLE_ADMIN")
+
+.requestMatchers(HttpMethod.DELETE,
+    "/api/products", "/api/products/**",
+    "/api/categories", "/api/categories/**",
+    "/api/users/**"
+).hasAnyAuthority("ADMIN","ROLE_ADMIN")
 
         .anyRequest().authenticated()
       )
