@@ -1,0 +1,2135 @@
+----- FILE: ./pom.xml -----
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.5.4</version>
+		<relativePath/> 
+	</parent>
+	<groupId>com.uade.tpo</groupId>
+	<artifactId>Marketplace</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Marketplace</name>
+	<description>Mi primera aplicacion con Spring</description>
+	<url/>
+	<licenses>
+		<license/>
+	</licenses>
+	<developers>
+		<developer/>
+	</developers>
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
+	<properties>
+		<java.version>17</java.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.11.5</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.11.5</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+		<dependency>
+        	<groupId>org.springframework.boot</groupId>
+        	<artifactId>spring-boot-starter-data-jpa</artifactId>
+    	</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+        	<groupId>com.mysql</groupId>
+        	<artifactId>mysql-connector-j</artifactId>
+        	<scope>runtime</scope>
+    	</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+    		<artifactId>lombok</artifactId>
+    		<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
+
+----- FILE: ./.mvn/wrapper/maven-wrapper.properties -----
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+wrapperVersion=3.3.2
+distributionType=only-script
+distributionUrl=https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.9.11/apache-maven-3.9.11-bin.zip
+
+----- FILE: ./src/test/java/com/uade/tpo/Marketplace/MarketplaceApplicationTests.java -----
+package com.uade.tpo.Marketplace;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class MarketplaceApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
+
+----- FILE: ./src/main/resources/application.properties -----
+spring.application.name=Marketplace
+server.port=4002
+spring.datasource.url=jdbc:mysql://localhost:3306/marketplace
+spring.datasource.username=root
+spring.datasource.password=joaquin5
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+
+spring.servlet.multipart.max-file-size=5MB
+spring.servlet.multipart.max-request-size=5MB
+
+server.error.include-stacktrace=never
+application.security.jwt.secretKey=change-me-to-a-256bit-secret-string-change-me-please-123456
+application.security.jwt.expiration=86400000 
+logging.level.org.springframework.security=DEBUG
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/repository/ProductImageRepository.java -----
+package com.uade.tpo.Marketplace.repository;
+
+import com.uade.tpo.Marketplace.entity.ProductImage;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface ProductImageRepository extends JpaRepository<ProductImage, Long> {
+    List<ProductImage> findByProductId(Long productId);
+}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/repository/OrderRepository.java -----
+package com.uade.tpo.Marketplace.repository;
+
+import com.uade.tpo.Marketplace.entity.Order;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+
+public interface OrderRepository extends JpaRepository<Order, Long> {
+     List<Order> findAllByUser_Id(Long userId);    
+   List<Order> findAllByUserEmail(String email); 
+}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/repository/OrderProductRepository.java -----
+package com.uade.tpo.Marketplace.repository;
+
+import com.uade.tpo.Marketplace.entity.Order_Product;
+import com.uade.tpo.Marketplace.entity.Order_Product_Id;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface OrderProductRepository extends JpaRepository<Order_Product, Order_Product_Id> {}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/repository/ProductRepository.java -----
+package com.uade.tpo.Marketplace.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import com.uade.tpo.Marketplace.entity.Product;
+
+public interface ProductRepository extends JpaRepository<Product, Long> {
+    boolean existsByName(String name);
+
+    // A) sumar stock
+    @Modifying
+    @Query("update Product p set p.stock = p.stock + :delta where p.id = :id")
+    int addToStock(@Param("id") Long id, @Param("delta") int delta);
+
+    // reasignar categoría
+    @Modifying
+    @Query("update Product p set p.category.id = :newId where p.category.id = :oldId")
+    int reassignCategory(@Param("oldId") Long oldId, @Param("newId") Long newId);
+
+    List<Product> findByActivoTrue();
+}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/repository/CategoryRepository.java -----
+package com.uade.tpo.Marketplace.repository;
+
+import com.uade.tpo.Marketplace.entity.Category;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CategoryRepository extends JpaRepository<Category, Long> {
+     boolean existsByDescription(String description);
+}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/repository/UserRepository.java -----
+package com.uade.tpo.Marketplace.repository;
+
+import com.uade.tpo.Marketplace.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByEmail(String email);
+    boolean existsByEmail(String email);
+}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/Security/Jwt/JwtService.java -----
+package com.uade.tpo.Marketplace.Security.Jwt;
+
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+import org.springframework.security.core.GrantedAuthority;
+
+
+import java.security.Key;
+import java.util.Date;
+import java.util.Map;
+import java.util.function.Function;
+
+@Service
+public class JwtService {
+
+  @Value("${application.security.jwt.secretKey}")
+  private String secret;
+
+  @Value("${application.security.jwt.expiration}")
+  private long expirationMs;
+
+  public String extractUsername(String token) { return extractClaim(token, Claims::getSubject); }
+
+  public <T> T extractClaim(String token, Function<Claims, T> resolver) { return resolver.apply(parse(token)); }
+
+  public String generateToken(UserDetails user) {
+    // authorities -> ["ADMIN"] o ["USER"]
+    var auths = user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
+    var role  = auths.isEmpty() ? null : auths.get(0);
+
+    return Jwts.builder()
+        .claim("authorities", auths)   // <- NUEVO
+        .claim("role", role)           // <- NUEVO (comodín para el front)
+        .setSubject(user.getUsername())
+        .setIssuedAt(new Date())
+        .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
+        .signWith(signKey(), SignatureAlgorithm.HS256)
+        .compact();
+  }
+
+  public boolean isTokenValid(String token, UserDetails user) {
+    return user.getUsername().equals(extractUsername(token)) && !isExpired(token);
+  }
+
+  private boolean isExpired(String token) {
+    return extractClaim(token, Claims::getExpiration).before(new Date());
+  }
+
+  private Claims parse(String token) {
+    return Jwts.parserBuilder().setSigningKey(signKey()).build().parseClaimsJws(token).getBody();
+  }
+
+  private Key signKey() {
+    byte[] key = (secret.length() % 4 == 0) ? Decoders.BASE64.decode(secret) : secret.getBytes();
+    return Keys.hmacShaKeyFor(key);
+  }
+}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/Security/Jwt/JwtAuthenticationFilter.java -----
+package com.uade.tpo.Marketplace.Security.Jwt;
+
+import java.io.IOException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+@Component
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
+  @Autowired
+  private JwtService jwtService;
+
+  @Autowired
+  private UserDetailsService userDetailsService;
+
+  @Override
+  protected void doFilterInternal(HttpServletRequest req,
+                                  HttpServletResponse res,
+                                  FilterChain chain) throws ServletException, IOException {
+
+    // 1) Dejar pasar preflight CORS sin autenticar
+    if ("OPTIONS".equalsIgnoreCase(req.getMethod())) {
+      chain.doFilter(req, res);
+      return;
+    }
+
+    // 2) Tomar el encabezado Authorization
+    final String authHeader = req.getHeader("Authorization");
+    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+      chain.doFilter(req, res);
+      return;
+    }
+
+    final String jwt = authHeader.substring(7);
+    final String username = jwtService.extractUsername(jwt); // suele ser "sub"
+
+    // 3) Si no hay autenticación previa en el contexto, validamos el token
+    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+      try {
+        UserDetails user = userDetailsService.loadUserByUsername(username);
+
+        // Importante: validar contra el usuario y luego propagar AUTHORITIES reales
+        if (jwtService.isTokenValid(jwt, user)) {
+          var auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+          auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
+          SecurityContextHolder.getContext().setAuthentication(auth);
+
+          // DEBUG: ver usuario y authorities resolvidos
+          System.out.println("[JWT] user=" + user.getUsername() +
+          " auths=" + user.getAuthorities());
+          UsernamePasswordAuthenticationToken authToken =
+              new UsernamePasswordAuthenticationToken(
+                  user,
+                  null,
+                  user.getAuthorities() // ← aquí viajan "ADMIN"/"USER"
+              );
+          authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
+          SecurityContextHolder.getContext().setAuthentication(authToken);
+        } else {
+          // token inválido, limpiamos por las dudas
+          SecurityContextHolder.clearContext();
+        }
+
+      } catch (Exception ignored) {
+        // No interrumpimos la cadena; dejará 401/403 en capas posteriores según corresponda
+        SecurityContextHolder.clearContext();
+      }
+    }
+
+    // 4) Continuar con el resto de filtros
+    chain.doFilter(req, res);
+  }
+}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/Security/Config/ApplicationConfig.java -----
+package com.uade.tpo.Marketplace.Security.Config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.uade.tpo.Marketplace.repository.UserRepository;
+
+@Configuration
+public class ApplicationConfig {
+
+  @Autowired
+  private UserRepository userRepository;
+
+  @Bean
+  public UserDetailsService userDetailsService() {
+    System.out.println("hola");
+    return username -> userRepository.findByEmail(username)
+  
+        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+  }
+
+  @Bean public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
+
+  @Bean
+  public AuthenticationProvider authenticationProvider() {
+    DaoAuthenticationProvider p = new DaoAuthenticationProvider();
+    p.setUserDetailsService(userDetailsService());
+    p.setPasswordEncoder(passwordEncoder());
+    return p;
+  }
+
+  @Bean
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    return config.getAuthenticationManager();
+  }
+}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/Security/Config/SecurityConfig.java -----
+// src/main/java/com/uade/tpo/Marketplace/Security/Config/SecurityConfig.java
+package com.uade.tpo.Marketplace.Security.Config;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import com.uade.tpo.Marketplace.Security.Jwt.JwtAuthenticationFilter;
+
+@Configuration
+@EnableMethodSecurity
+public class SecurityConfig {
+
+  @Autowired private JwtAuthenticationFilter jwtFilter;
+  @Autowired private AuthenticationProvider authProvider;
+
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http
+      .cors(Customizer.withDefaults())
+      .csrf(csrf -> csrf.disable())
+      .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+      .authorizeHttpRequests(auth -> auth
+        // preflight
+        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+        // público
+        .requestMatchers("/api/v1/auth/**").permitAll()
+        .requestMatchers(HttpMethod.GET,
+            "/api/products",        // <- singular
+            "/api/products/**",     // <- recursivo
+            "/api/categories",
+            "/api/categories/**",
+            "/api/products/*/images/**"
+        ).permitAll()
+
+        // autenticado
+        .requestMatchers("/api/compras/mias", "/api/orders/mias").authenticated()
+        .requestMatchers(HttpMethod.POST, "/api/compras/**", "/api/orders/**").authenticated()
+
+        // ADMIN (acepta ADMIN y ROLE_ADMIN)
+        .requestMatchers(HttpMethod.POST,
+            "/api/products", "/api/products/**",
+            "/categories/**", "/api/users/**"
+        ).hasAnyAuthority("ADMIN","ROLE_ADMIN")
+        .requestMatchers(HttpMethod.PUT,
+            "/api/products", "/api/products/**",
+            "/categories/**", "/api/users/**"
+        ).hasAnyAuthority("ADMIN","ROLE_ADMIN")
+        .requestMatchers(HttpMethod.PATCH,
+            "/api/products", "/api/products/**",
+            "/categories/**", "/api/users/**"
+        ).hasAnyAuthority("ADMIN","ROLE_ADMIN")
+        .requestMatchers(HttpMethod.DELETE,
+            "/api/products", "/api/products/**",
+            "/categories/**", "/api/users/**"
+        ).hasAnyAuthority("ADMIN","ROLE_ADMIN")
+        .requestMatchers(HttpMethod.GET,
+            "/api/users/**", "/api/compras/**", "/api/orders/**"
+        ).hasAnyAuthority("ADMIN","ROLE_ADMIN")
+
+        .anyRequest().authenticated()
+      )
+      .authenticationProvider(authProvider)
+      .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
+    return http.build();
+  }
+
+  @Bean
+  public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration c = new CorsConfiguration();
+    c.setAllowedOrigins(List.of("http://localhost:5173", "http://127.0.0.1:5173"));
+    c.setAllowedMethods(List.of("GET","POST","PUT","PATCH","DELETE","OPTIONS"));
+    c.setAllowedHeaders(List.of("*"));
+    c.setExposedHeaders(List.of("Authorization","Content-Type"));
+    c.setAllowCredentials(true);
+
+    UrlBasedCorsConfigurationSource s = new UrlBasedCorsConfigurationSource();
+    s.registerCorsConfiguration("/**", c);
+    return s;
+  }
+}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/Auth/RegisterRequest.java -----
+package com.uade.tpo.Marketplace.Auth;
+
+public record RegisterRequest(
+    String firstName, 
+    String lastName, 
+    String email, 
+    String password, 
+    String role) {}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/Auth/AuthenticationResponse.java -----
+package com.uade.tpo.Marketplace.Auth;
+
+public record AuthenticationResponse(
+    String accessToken) 
+    {}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/Auth/AuthenticationRequest.java -----
+package com.uade.tpo.Marketplace.Auth;
+
+public record AuthenticationRequest(
+    String email, 
+    String password)
+    {}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/Product_Discount.java -----
+package com.uade.tpo.Marketplace.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+@Entity 
+@Data 
+@NoArgsConstructor 
+@AllArgsConstructor
+@Table(name = "product_discount")
+public class Product_Discount {
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+
+  @ManyToOne @JoinColumn(name = "product_id", nullable = false)
+  private Product product;
+
+  @Column(nullable = false) private BigDecimal percentage;
+  @Column(nullable = false) private LocalDateTime startDate;
+  @Column(nullable = false) private LocalDateTime endDate;
+}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/Order.java -----
+package com.uade.tpo.Marketplace.entity;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.Data;
+
+@Entity
+@Data
+@Table(name = "orders")
+public class Order {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column
+    private Long total;
+
+    @Column
+     private LocalDateTime date;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @OneToMany(mappedBy = "order")
+    private List<Order_Product> items = new ArrayList<>();
+
+    @OneToMany(mappedBy = "order")
+    private List<Total_Discount> discounts = new ArrayList<>();
+
+    
+}
+
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/Product.java -----
+package com.uade.tpo.Marketplace.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+    private Double price;
+    private int stock;
+    private String description;
+    @ManyToOne @JoinColumn(name="category_id", nullable=false)
+    private Category category;
+
+    //Campo para Baja logica de Producto
+    @Column(nullable = false)
+    private Boolean activo = true;
+
+
+}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/Order_Product.java -----
+package com.uade.tpo.Marketplace.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+import java.io.Serializable;
+
+@Entity
+@Table(name = "order_product")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@IdClass(Order_Product_Id.class)
+public class Order_Product implements Serializable {
+
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order;
+
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
+    @Column(nullable = false)
+    private int quantity;
+}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/ProductImage.java -----
+package com.uade.tpo.Marketplace.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "product_images")
+public class ProductImage {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String fileName;
+
+    private String contentType;
+
+    @Lob
+    @Column(nullable = false, columnDefinition = "LONGBLOB")
+    private byte[] data;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/Order_Product_Id.java -----
+package com.uade.tpo.Marketplace.entity;
+
+import lombok.*;
+import java.io.Serializable;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Order_Product_Id implements Serializable {
+    private Long order;
+    private Long product;
+}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/Category.java -----
+package com.uade.tpo.Marketplace.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "category")
+public class Category {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String description;
+}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/User.java -----
+package com.uade.tpo.Marketplace.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
+
+@Data @Builder @NoArgsConstructor @AllArgsConstructor
+@Entity
+public class User implements UserDetails {
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+
+  private String firstName;
+  private String lastName;
+
+  @Column(nullable = false, unique = true)
+  private String email;
+
+  private String password;
+
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private Role role;
+
+  @Override public Collection<? extends GrantedAuthority> getAuthorities() {
+    return List.of(new SimpleGrantedAuthority(role.name()));
+  }
+  @Override public String getUsername() { return email; }
+  @Override public boolean isAccountNonExpired() { return true; }
+  @Override public boolean isAccountNonLocked() { return true; }
+  @Override public boolean isCredentialsNonExpired() { return true; }
+  @Override public boolean isEnabled() { return true; }
+}
+
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/Total_Discount.java -----
+package com.uade.tpo.Marketplace.entity;
+
+import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.Data;
+
+@Data
+@Entity
+public class Total_Discount {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order; 
+
+    @Column
+    private Double percentage;
+
+    @Column
+    private LocalDateTime startDate;
+
+    @Column
+    private LocalDateTime endDate;
+}
+
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/dtos/ProductResponseDTO.java -----
+package com.uade.tpo.Marketplace.entity.dtos;
+
+import java.util.List;
+
+public record ProductResponseDTO(
+    Long id,
+    String name,
+    String description,
+    Double price,
+    int stock,
+    Long categoryId,
+    String categoryDescription,
+    Boolean activo,
+    List<ProductImageDTO> images,
+    String descuento // NUEVO campo
+) {}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/dtos/OrderUpdateDTO.java -----
+package com.uade.tpo.Marketplace.entity.dtos;
+
+public class OrderUpdateDTO {
+    
+}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/dtos/UserResponseDTO.java -----
+package com.uade.tpo.Marketplace.entity.dtos;
+
+
+public record UserResponseDTO(
+  Long id, String firstName, String lastName, String email
+) {}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/dtos/ProductCreateDTO.java -----
+package com.uade.tpo.Marketplace.entity.dtos;
+
+import jakarta.validation.constraints.*;
+
+public record ProductCreateDTO(
+        @NotBlank(message="name es obligatorio") String name,
+        @NotBlank(message="description es obligatoria") String description,
+        @NotNull(message="price es obligatorio") @Positive(message="price debe ser > 0") Double price,
+        @Min(value=0, message="stock no puede ser negativo") int stock,
+        @NotNull(message="categoryId es obligatorio") Long categoryId
+) {}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/dtos/CompraResponseDTO.java -----
+package com.uade.tpo.Marketplace.entity.dtos;
+
+import java.time.LocalDateTime; import java.util.List;
+
+public record CompraResponseDTO(Long id, Long userId, double total, LocalDateTime date, List<CompraItemDTO> items) {}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/dtos/CompraItemDTO.java -----
+package com.uade.tpo.Marketplace.entity.dtos;
+
+public record CompraItemDTO(Long productId, String productName, int quantity, double priceUnit, double lineTotal) {}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/dtos/CompraCreateDTO.java -----
+package com.uade.tpo.Marketplace.entity.dtos;
+
+import jakarta.validation.constraints.NotEmpty; import jakarta.validation.constraints.NotNull;
+import java.util.List;
+
+public record CompraCreateDTO(@NotEmpty List<CompraCreateItemDTO> items) {}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/dtos/UserUpdateDTO.java -----
+package com.uade.tpo.Marketplace.entity.dtos;
+
+import jakarta.validation.constraints.*;
+
+public record UserUpdateDTO(
+  @NotBlank String firstName,
+  @NotBlank String lastName,
+  @Email String email,
+  @Size(min=6)String password
+) {}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/dtos/CategoryCreateDTO.java -----
+package com.uade.tpo.Marketplace.entity.dtos;
+
+import jakarta.validation.constraints.*;
+
+public record CategoryCreateDTO(
+  @NotBlank String description
+) {}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/dtos/OrderItemDTO.java -----
+package com.uade.tpo.Marketplace.entity.dtos;
+
+public record OrderItemDTO(
+        Long productId,
+        String productName,
+        int quantity,
+        Double priceUnit,
+        Double lineTotal
+) {}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/dtos/CategoryResponseDTO.java -----
+package com.uade.tpo.Marketplace.entity.dtos;
+
+public record CategoryResponseDTO(
+    Long id,
+    String description
+) {}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/dtos/UserCreateDTO.java -----
+package com.uade.tpo.Marketplace.entity.dtos;
+
+import jakarta.validation.constraints.*;
+
+public record UserCreateDTO(
+  @NotBlank String firstName,
+  @NotBlank String lastName,
+  @Email String email,
+  @Size(min=6) String password
+) {}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/dtos/LoginResponseDTO.java -----
+package com.uade.tpo.Marketplace.entity.dtos;
+
+public class LoginResponseDTO {
+    
+}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/dtos/CompraCreateItemDTO.java -----
+package com.uade.tpo.Marketplace.entity.dtos;
+
+import jakarta.validation.constraints.Min; import jakarta.validation.constraints.NotNull;
+
+public record CompraCreateItemDTO(@NotNull Long productId, @Min(1) int quantity) {}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/dtos/LoginRequestDTO.java -----
+package com.uade.tpo.Marketplace.entity.dtos;
+
+public class LoginRequestDTO {
+    
+}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/dtos/ProductUpdateDTO.java -----
+package com.uade.tpo.Marketplace.entity.dtos;
+
+
+import jakarta.validation.constraints.*;
+
+public record ProductUpdateDTO(
+    String description,
+  @Positive Double price,
+  @Min(0) Integer stock
+) {}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/dtos/OrderResponseDTO.java -----
+package com.uade.tpo.Marketplace.entity.dtos;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+public record OrderResponseDTO(
+    Long id,
+    Long userId,
+    LocalDateTime date,
+    Double total,
+    List<OrderItemDTO> items
+) {}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/dtos/ProductImageDTO.java -----
+package com.uade.tpo.Marketplace.entity.dtos;
+
+public record ProductImageDTO(
+    Long id,
+    String fileName,
+    String contentType,
+    String url
+) {}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/entity/Role.java -----
+package com.uade.tpo.Marketplace.entity;
+
+public enum Role {
+    USER,
+    ADMIN
+}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/MarketplaceApplication.java -----
+package com.uade.tpo.Marketplace;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class MarketplaceApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(MarketplaceApplication.class, args);
+	}
+
+}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/Exceptions/CategoryDuplicateException.java -----
+package com.uade.tpo.Marketplace.Exceptions;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = "La categoria que se intenta agregar esta duplicada")
+public class CategoryDuplicateException extends Exception {
+    
+
+}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/Exceptions/ProductDuplicateException.java -----
+package com.uade.tpo.Marketplace.Exceptions;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = "El producto que se intenta agregar esta duplicado")
+public class ProductDuplicateException extends Exception {
+
+}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/service/UserService.java -----
+package com.uade.tpo.Marketplace.service;
+
+import com.uade.tpo.Marketplace.entity.Role;
+import com.uade.tpo.Marketplace.entity.User;
+import com.uade.tpo.Marketplace.entity.dtos.UserCreateDTO;
+import com.uade.tpo.Marketplace.entity.dtos.UserUpdateDTO;
+import com.uade.tpo.Marketplace.entity.dtos.UserResponseDTO;
+import com.uade.tpo.Marketplace.repository.UserRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@Transactional
+public class UserService {
+    @Autowired
+    private  UserRepository repo;
+
+    private UserResponseDTO toDto(User u) {
+    return new UserResponseDTO(
+        u.getId(),
+        u.getFirstName(),
+        u.getLastName(),
+        u.getEmail()
+    );
+}
+     @Transactional(readOnly = true)
+    public List<UserResponseDTO> findAll() {
+        return repo.findAll().stream().map(this::toDto).toList();
+  }
+
+    @Transactional(readOnly = true)
+  public UserResponseDTO findById(Long id) {
+    var u = repo.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("User not found: " + id));
+    return toDto(u);
+  }
+
+  @Transactional(readOnly = true)
+  public UserResponseDTO findByEmail(String email) {
+    var u = repo.findByEmail(email)
+        .orElseThrow(() -> new IllegalArgumentException("El usuario no se encontro con el mail: " + email));
+    return toDto(u);
+  }
+
+  public UserResponseDTO create(UserCreateDTO dto) {
+    if (repo.existsByEmail(dto.email()))
+      throw new IllegalArgumentException("El email ya esta registrado");
+
+    var u = new User();
+    u.setId(null);
+    u.setFirstName(dto.firstName());
+    u.setLastName(dto.lastName());
+    u.setEmail(dto.email());
+    u.setPassword(dto.password());        
+    u.setRole(Role.USER);                 
+
+    return toDto(repo.save(u));
+  }
+
+  public UserResponseDTO update(Long id, UserUpdateDTO dto) {
+    var db = repo.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("User not found: " + id));
+
+    if (dto.email() != null && !dto.email().equals(db.getEmail()) && repo.existsByEmail(dto.email()))
+      throw new IllegalArgumentException("El email ya esta registrado");
+
+    if (dto.firstName() != null) db.setFirstName(dto.firstName());
+    if (dto.lastName()  != null) db.setLastName(dto.lastName());
+    if (dto.email()     != null) db.setEmail(dto.email());
+    if (dto.password()  != null) db.setPassword(dto.password());  // se puede actualizar
+    return toDto(repo.save(db));
+  }
+
+  public void delete(Long id) {
+    if (!repo.existsById(id)) throw new IllegalArgumentException("User not found: " + id);
+    repo.deleteById(id);
+  }
+
+  public UserResponseDTO changeRole(Long id, Role role) {
+    var db = repo.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("User not found: " + id));
+    db.setRole(role);
+    return toDto(repo.save(db));
+  }
+
+}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/service/CompraService.java -----
+package com.uade.tpo.Marketplace.service;
+
+import com.uade.tpo.Marketplace.entity.Order;
+import com.uade.tpo.Marketplace.entity.Order_Product;
+import com.uade.tpo.Marketplace.entity.dtos.*;
+import com.uade.tpo.Marketplace.repository.OrderProductRepository;
+import com.uade.tpo.Marketplace.repository.OrderRepository;
+import com.uade.tpo.Marketplace.repository.ProductRepository;
+import com.uade.tpo.Marketplace.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
+@Service
+@Transactional
+public class CompraService {
+
+  @Autowired private OrderRepository orderRepo;
+  @Autowired private OrderProductRepository orderProductRepo;
+  @Autowired private UserRepository userRepo;
+  @Autowired private ProductRepository productRepo;
+
+  // ---------- Lecturas ----------
+  @Transactional(readOnly = true)
+  public List<CompraResponseDTO> findAll() {
+    return orderRepo.findAll().stream().map(this::toDto).toList();
+  }
+
+  @Transactional(readOnly = true)
+  public CompraResponseDTO findById(Long id) {
+    var o = orderRepo.findById(id)
+        .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Compra no encontrada: " + id));
+    return toDto(o);
+  }
+
+  // Mías por email (del token)
+  @Transactional(readOnly = true)
+  public List<CompraResponseDTO> findMineByEmail(String email) {
+    return orderRepo.findAllByUserEmail(email).stream().map(this::toDto).toList();
+  }
+
+  // ADMIN: todas por userId
+  @Transactional(readOnly = true)
+  public List<CompraResponseDTO> findByUserId(Long userId) {
+    return orderRepo.findAllByUser_Id(userId).stream().map(this::toDto).toList();
+  }
+
+  // ---------- Escrituras ----------
+
+  // USUARIO AUTENTICADO: crea la compra usando el email del token
+  public CompraResponseDTO createForEmail(String email, CompraCreateDTO dto) {
+    var user = userRepo.findByEmail(email)
+        .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Usuario no encontrado: " + email));
+    return createInternal(user.getId(), dto);
+  }
+
+  // ADMIN: crear compra para un userId explícito (opcional)
+  public CompraResponseDTO createForUserId(Long userId, CompraCreateDTO dto) {
+    // valida existencia del usuario
+    userRepo.findById(userId)
+        .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Usuario no encontrado: " + userId));
+    return createInternal(userId, dto);
+  }
+
+  // Lógica común de creación
+  private CompraResponseDTO createInternal(Long userId, CompraCreateDTO dto) {
+    var user = userRepo.findById(userId)
+        .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Usuario no encontrado: " + userId));
+
+    var o = new Order();
+    o.setUser(user);
+    o.setDate(LocalDateTime.now());
+    o.setTotal(0L);
+    o = orderRepo.save(o);
+
+    double total = 0.0;
+    int totalQuantity = 0;
+
+    for (var it : dto.items()) {
+      var p = productRepo.findById(it.productId())
+          .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Producto no encontrado: " + it.productId()));
+
+      if (it.quantity() <= 0) throw new ResponseStatusException(BAD_REQUEST, "quantity >= 1");
+      if (p.getStock() < it.quantity())
+        throw new ResponseStatusException(BAD_REQUEST, "stock insuficiente para productId=" + p.getId());
+
+      p.setStock(p.getStock() - it.quantity());
+      productRepo.save(p);
+
+      var op = new Order_Product(o, p, it.quantity());
+      orderProductRepo.save(op);
+
+      total += p.getPrice() * it.quantity();
+      totalQuantity += it.quantity();
+    }
+
+    // promo por cantidad (si aplica)
+    if (totalQuantity >= 3) total *= 0.85;
+
+    o.setTotal(Math.round(total));
+    o = orderRepo.save(o);
+
+    return toDto(o);
+  }
+
+  // ---------- Mapping ----------
+  private CompraResponseDTO toDto(Order o) {
+    var items = o.getItems().stream().map(op ->
+        new CompraItemDTO(
+            op.getProduct().getId(),
+            op.getProduct().getName(),
+            op.getQuantity(),
+            op.getProduct().getPrice(),
+            op.getProduct().getPrice() * op.getQuantity()
+        )
+    ).toList();
+
+    return new CompraResponseDTO(
+        o.getId(),
+        o.getUser().getId(),
+        o.getTotal(),
+        o.getDate(),
+        items
+    );
+  }
+}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/service/ProductService.java -----
+package com.uade.tpo.Marketplace.service;
+import java.io.IOException;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.uade.tpo.Marketplace.Exceptions.ProductDuplicateException;
+import com.uade.tpo.Marketplace.entity.Product;
+import com.uade.tpo.Marketplace.entity.ProductImage;
+import com.uade.tpo.Marketplace.entity.dtos.ProductCreateDTO;
+import com.uade.tpo.Marketplace.entity.dtos.ProductImageDTO;
+import com.uade.tpo.Marketplace.entity.dtos.ProductResponseDTO;
+import com.uade.tpo.Marketplace.entity.dtos.ProductUpdateDTO;
+import com.uade.tpo.Marketplace.repository.CategoryRepository;
+import com.uade.tpo.Marketplace.repository.ProductImageRepository;
+import com.uade.tpo.Marketplace.repository.ProductRepository;
+
+import jakarta.persistence.EntityNotFoundException;
+
+@Service
+@Transactional
+public class ProductService {
+
+    @Autowired private ProductRepository repo;
+    @Autowired private CategoryRepository categoryRepo;
+    @Autowired private ProductImageRepository productImageRepo;
+
+    public ProductResponseDTO createWithImages(String name, String description, Double price,
+                                               Integer stock, Long categoryId,
+                                               List<MultipartFile> files)
+            throws IOException, ProductDuplicateException {
+
+        if (repo.existsByName(name)) throw new ProductDuplicateException();
+
+        var category = categoryRepo.findById(categoryId)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Category not found: " + categoryId));
+
+        var p = new Product();
+        p.setName(name);
+        p.setDescription(description);
+        p.setPrice(price);
+        p.setStock(stock);
+        p.setCategory(category);
+
+        var saved = repo.save(p);
+
+        if (files != null) {
+            for (MultipartFile f : files) {
+                if (f == null || f.isEmpty()) continue;
+                var img = new ProductImage();
+                img.setFileName(f.getOriginalFilename());
+                img.setContentType(f.getContentType());
+                img.setData(f.getBytes());  
+                img.setProduct(saved);
+                productImageRepo.save(img);
+            }
+        }
+        return toDto(saved);
+    }
+
+
+    private ProductResponseDTO toDto(Product p){
+    List<ProductImageDTO> images = productImageRepo.findByProductId(p.getId())
+            .stream().map(this::toImageDto).toList();
+
+    Integer percent = getDiscountPercent(p);           // <- calcula % vigente
+    String descuento = (percent != null && percent > 0)
+            ? "descuento de " + percent + "%"
+            : null;
+
+    return new ProductResponseDTO(
+            p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.getStock(),
+            p.getCategory()!=null ? p.getCategory().getId() : null,
+            p.getCategory()!=null ? p.getCategory().getDescription() : null,
+            p.getActivo(),
+            images,
+            descuento                                        // <- nuevo campo
+    );
+}
+
+    private Integer getDiscountPercent(Product p) {
+        
+        return 0;  
+}
+
+    
+
+    private ProductImageDTO toImageDto(ProductImage img) {
+        String url = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/api/products/")
+                .path(img.getProduct().getId().toString())
+                .path("/images/")
+                .path(img.getId().toString())
+                .toUriString();
+
+        return new ProductImageDTO(
+                img.getId(),
+                img.getFileName(),
+                img.getContentType(),
+                url
+        );
+
+    }
+    @Transactional
+    public void addToStock(Long id, int delta) {
+    if (delta == 0) return;
+    int updated = repo.addToStock(id, delta); // usar 'repo'
+    if (updated == 0) throw new EntityNotFoundException("producto no encontrado");
+
+    Product p = repo.findById(id).orElseThrow(); // tipar como Product
+    if (p.getStock() < 0) throw new IllegalStateException("stock no puede ser negativo");
+}
+
+
+
+    @Transactional(readOnly = true)
+    public List<ProductResponseDTO> findAll() {
+        return repo.findByActivoTrue().stream().map(this::toDto).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public ProductResponseDTO findById(Long id){
+        var p = repo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "El producto no existe: " + id));
+        return toDto(p);
+    }
+
+    public ProductResponseDTO create(ProductCreateDTO dto) throws ProductDuplicateException{
+        if (repo.existsByName(dto.name())) throw new ProductDuplicateException();
+        var category = categoryRepo.findById(dto.categoryId())
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Category not found: " + dto.categoryId()));
+        var p = new Product();
+        p.setName(dto.name());
+        p.setDescription(dto.description());
+        p.setPrice(dto.price());
+        p.setStock(dto.stock());
+        p.setCategory(category);
+        return toDto(repo.save(p));
+    }
+
+    public ProductResponseDTO partialUpdate(Long id, ProductUpdateDTO dto) {
+        var p = repo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "El producto no existe: " + id));
+        if (dto.description() != null) p.setDescription(dto.description());
+        if (dto.price() != null) {
+            if (dto.price() <= 0) throw new ResponseStatusException(BAD_REQUEST, "price debe ser > 0");
+            p.setPrice(dto.price());
+        }
+        if (dto.stock() != null) {
+            if (dto.stock() < 0) throw new ResponseStatusException(BAD_REQUEST, "stock no puede ser negativo");
+            p.setStock(dto.stock());
+        }
+        return toDto(repo.save(p));
+    }
+
+    public void delete(Long id) {
+        var p = repo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "El producto no existe: " + id));
+        p.setActivo(false);
+        repo.save(p);
+    }
+
+    public void activar(Long id) {
+        var p = repo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "El producto no existe: " + id));
+        p.setActivo(true);
+        repo.save(p);
+    }
+}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/service/OrderService.java -----
+package com.uade.tpo.Marketplace.service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.uade.tpo.Marketplace.entity.Order;
+import com.uade.tpo.Marketplace.entity.User;
+import com.uade.tpo.Marketplace.entity.dtos.OrderItemDTO;
+import com.uade.tpo.Marketplace.entity.dtos.OrderResponseDTO;
+import com.uade.tpo.Marketplace.repository.OrderRepository;
+import com.uade.tpo.Marketplace.repository.UserRepository;
+
+@Service
+@Transactional
+public class OrderService {
+
+  @Autowired private OrderRepository repo;
+  @Autowired private UserRepository userRepo;
+
+
+  @Transactional(readOnly = true)
+  public List<Order> findAll() { return repo.findAll(); }
+
+  @Transactional(readOnly = true)
+  public Order findById(Long id) {
+    return repo.findById(id).orElseThrow(() -> new IllegalArgumentException("Order not found: " + id));
+  }
+
+  public Order create(Order o) {
+    if (o.getUser() == null || o.getUser().getId() == null) throw new IllegalArgumentException("User id is required");
+    User user = userRepo.findById(o.getUser().getId())
+        .orElseThrow(() -> new IllegalArgumentException("User not found: " + o.getUser().getId()));
+    o.setUser(user);
+    o.setId(null);
+    return repo.save(o);
+  }
+
+  public Order update(Long id, Order o) {
+    Order db = findById(id);
+    if (o.getTotal() != null) db.setTotal(o.getTotal());
+    if (o.getDate() != null) db.setDate(o.getDate());
+    if (o.getUser() != null && o.getUser().getId() != null) {
+      User user = userRepo.findById(o.getUser().getId())
+          .orElseThrow(() -> new IllegalArgumentException("User not found: " + o.getUser().getId()));
+      db.setUser(user);
+    }
+    return repo.save(db);
+  }
+
+  public void delete(Long id) {
+    if (!repo.existsById(id)) throw new IllegalArgumentException("Order not found: " + id);
+    repo.deleteById(id);
+  }
+
+  // ---------- DTOs ----------
+
+  @Transactional(readOnly = true)
+  public List<OrderResponseDTO> findAllDto() {
+    return repo.findAll().stream().map(this::toDto).collect(Collectors.toList());
+  }
+
+  @Transactional(readOnly = true)
+  public OrderResponseDTO findDtoById(Long id) {
+    var o = repo.findById(id).orElseThrow(() -> new IllegalArgumentException("Order not found: " + id));
+    return toDto(o);
+  }
+
+  // ADMIN: todas por userId
+  @Transactional(readOnly = true)
+  public List<OrderResponseDTO> findDtosByUserId(Long userId) {
+    return repo.findAllByUser_Id(userId).stream().map(this::toDto).collect(Collectors.toList());
+  }
+
+  // USER autenticado: “mías” usando email del token (Authentication#getName)
+  @Transactional(readOnly = true)
+  public List<OrderResponseDTO> findDtosMineByEmail(String email) {
+    return repo.findAllByUserEmail(email).stream().map(this::toDto).collect(Collectors.toList());
+  }
+
+  private OrderResponseDTO toDto(Order o) {
+    var items = o.getItems().stream()
+        .map(i -> new OrderItemDTO(
+            i.getProduct().getId(),
+            i.getProduct().getName(),
+            i.getQuantity(),
+            i.getProduct().getPrice(),
+            i.getQuantity() * i.getProduct().getPrice()
+        ))
+        .collect(Collectors.toList());
+
+    Double total = (o.getTotal() == null) ? 0d : o.getTotal().doubleValue();
+
+    return new OrderResponseDTO(
+        o.getId(),
+        (o.getUser() != null ? o.getUser().getId() : null),
+        o.getDate(),
+        total,
+        items
+    );
+  }
+}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/service/ProductImageService.java -----
+package com.uade.tpo.Marketplace.service;
+
+import com.uade.tpo.Marketplace.entity.Product;
+import com.uade.tpo.Marketplace.entity.ProductImage;
+import com.uade.tpo.Marketplace.repository.ProductImageRepository;
+import com.uade.tpo.Marketplace.repository.ProductRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+
+
+@Service
+public class ProductImageService {
+
+
+    @Autowired
+    private ProductImageRepository imageRepo;
+    @Autowired
+    private ProductRepository productRepo;
+
+    public ProductImage saveImage(Long productId, MultipartFile file) throws IOException {
+        Product product = productRepo.findById(productId)
+            .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+
+        ProductImage image = new ProductImage();
+        image.setFileName(file.getOriginalFilename());
+        image.setContentType(file.getContentType());
+        image.setData(file.getBytes());
+        image.setProduct(product);
+        return imageRepo.save(image);
+    }
+
+    public ProductImage getImage(Long imageId) {
+        return imageRepo.findById(imageId)
+            .orElseThrow(() -> new IllegalArgumentException("Imagen no encontrada: " + imageId));
+    }
+
+    public void deleteImage(Long imageId) {
+        imageRepo.deleteById(imageId);
+    }
+}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/service/AuthenticationService.java -----
+package com.uade.tpo.Marketplace.service;
+
+import com.uade.tpo.Marketplace.Auth.AuthenticationRequest;
+import com.uade.tpo.Marketplace.Auth.AuthenticationResponse;
+import com.uade.tpo.Marketplace.Auth.RegisterRequest;
+import com.uade.tpo.Marketplace.entity.*;
+import com.uade.tpo.Marketplace.repository.UserRepository;
+import com.uade.tpo.Marketplace.Security.Jwt.JwtService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+@Service
+public class AuthenticationService {
+
+ @Autowired private UserRepository repo;
+  @Autowired private PasswordEncoder encoder;
+  @Autowired private JwtService jwt;
+  @Autowired private AuthenticationManager authManager;
+
+  private Role resolveRole(String raw) {
+    if (raw == null || raw.isBlank()) return Role.USER;
+    try { return Role.valueOf(raw.trim().toUpperCase()); }
+    catch (IllegalArgumentException ex) { return Role.USER; }
+  }
+
+  public AuthenticationResponse register(RegisterRequest req) {
+    Role roleToSet = resolveRole(req.role());   // ← usa lo que viene en el body
+
+    User user = User.builder()
+        .firstName(req.firstName())
+        .lastName(req.lastName())
+        .email(req.email())
+        .password(encoder.encode(req.password()))
+        .role(roleToSet)
+        .build();
+
+    repo.save(user);
+    return new AuthenticationResponse(jwt.generateToken(user));
+  }
+
+  // Login normal
+  public AuthenticationResponse authenticate(AuthenticationRequest req) {
+    authManager.authenticate(new UsernamePasswordAuthenticationToken(req.email(), req.password()));
+    User user = repo.findByEmail(req.email()).orElseThrow();
+    return new AuthenticationResponse(jwt.generateToken(user));
+  }
+}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/service/CategoryService.java -----
+package com.uade.tpo.Marketplace.service;
+
+
+import com.uade.tpo.Marketplace.Exceptions.CategoryDuplicateException;
+import com.uade.tpo.Marketplace.entity.Category;
+import com.uade.tpo.Marketplace.entity.dtos.*;
+import com.uade.tpo.Marketplace.repository.CategoryRepository;
+import com.uade.tpo.Marketplace.repository.ProductRepository;
+
+import jakarta.annotation.PostConstruct;
+
+import java.util.List;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+
+
+import com.uade.tpo.Marketplace.entity.dtos.CategoryCreateDTO;
+import com.uade.tpo.Marketplace.entity.dtos.CategoryResponseDTO;
+
+
+@Service
+@Transactional
+public class CategoryService {
+
+    private static final long GENERAL_CATEGORY_ID = 1L;
+
+    @Autowired
+    private CategoryRepository categoryRepo;
+
+    @Autowired
+    private ProductRepository productRepo;
+
+
+
+    @PostConstruct
+    public void initGeneralCategory() {
+        if (categoryRepo.count() == 0) {
+            Category general = new Category();
+            general.setDescription("General");
+            categoryRepo.save(general);  
+        }
+      }
+
+      @Transactional(readOnly = true)
+  public List<CategoryResponseDTO> findAll() {
+    return categoryRepo.findAll().stream().map(this::toDto).toList();
+  }
+
+    @Transactional(readOnly = true)
+  public CategoryResponseDTO findById(Long id) {
+    var c = categoryRepo.findById(id)
+        .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Category not found: " + id));
+    return toDto(c);
+  }
+
+  public CategoryResponseDTO create(CategoryCreateDTO dto) throws CategoryDuplicateException {
+    if (categoryRepo.existsByDescription(dto.description())) throw new CategoryDuplicateException();
+    var c = new Category();
+    c.setDescription(dto.description());
+    return toDto(categoryRepo.save(c));
+  }
+
+  public void delete(Long id) {
+    if (!categoryRepo.existsById(id))
+      throw new ResponseStatusException(NOT_FOUND, "La categoria no existe: " + id);
+    if (id == GENERAL_CATEGORY_ID)
+      throw new ResponseStatusException(BAD_REQUEST, "No se puede borrar la categoria General");
+
+    productRepo.reassignCategory(id, GENERAL_CATEGORY_ID);
+    categoryRepo.deleteById(id);
+  }
+
+  private CategoryResponseDTO toDto(Category c) {
+    return new CategoryResponseDTO(c.getId(), c.getDescription());
+  }
+}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/controllers/ProductController.java -----
+package com.uade.tpo.Marketplace.controllers;
+
+import java.io.IOException;
+import java.net.URI;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.uade.tpo.Marketplace.Exceptions.ProductDuplicateException;
+import com.uade.tpo.Marketplace.entity.dtos.ProductCreateDTO;
+import com.uade.tpo.Marketplace.entity.dtos.ProductResponseDTO;
+import com.uade.tpo.Marketplace.entity.dtos.ProductUpdateDTO;
+import com.uade.tpo.Marketplace.service.ProductService;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/api/products")
+public class ProductController {
+
+    private final ProductService service;
+    public ProductController(ProductService service){ this.service = service; }
+
+    // D) mensaje si no hay productos
+    @GetMapping
+    public ResponseEntity<Map<String,Object>> list() {
+        var items = service.findAll();
+        String msg = items.isEmpty() ? "no hay productos" : "ok";
+        return ResponseEntity.ok(Map.of("message", msg, "data", items));
+    }
+
+    @GetMapping("/{id}")
+    public ProductResponseDTO get(@PathVariable Long id) { return service.findById(id); }
+
+    @PostMapping
+    public ResponseEntity<ProductResponseDTO> create(@Valid @RequestBody ProductCreateDTO dto)
+            throws ProductDuplicateException {
+        var created = service.create(dto);
+        return ResponseEntity.created(URI.create("/api/products/" + created.id())).body(created);
+    }
+
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ProductResponseDTO> createWithImages(
+            @RequestParam String name, @RequestParam String description,
+            @RequestParam Double price, @RequestParam Integer stock,
+            @RequestParam Long categoryId, @RequestParam("files") List<MultipartFile> files)
+            throws IOException, ProductDuplicateException {
+        return ResponseEntity.ok(service.createWithImages(name, description, price, stock, categoryId, files));
+    }
+
+    @PatchMapping("/{id}")
+    public ProductResponseDTO partialUpdate(@PathVariable Long id, @Valid @RequestBody ProductUpdateDTO dto) {
+        return service.partialUpdate(id, dto);
+    }
+
+    // A) PATCH que suma stock
+    @PatchMapping("/{id}/stock")
+    public ResponseEntity<Map<String,String>> addStock(@PathVariable Long id, @RequestBody StockPatch body) {
+        service.addToStock(id, body.delta());
+        return ResponseEntity.ok(Map.of("message","stock actualizado"));
+    }
+    public record StockPatch(int delta) {}
+
+    // C) baja lógica con mensaje
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String,String>> bajaLogica(@PathVariable Long id) {
+    service.delete(id); // ya hace baja lógica (activo=false)
+    return ResponseEntity.ok(Map.of("message","prod modificado con exito"));
+}
+
+
+    @PatchMapping("/{id}/activar")
+    public ResponseEntity<Map<String,String>> activar(@PathVariable Long id) {
+        service.activar(id);
+        return ResponseEntity.ok(Map.of("message","prod modificado con exito"));
+    }
+}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/controllers/CategoriesControllers.java -----
+package com.uade.tpo.Marketplace.controllers;
+
+import java.net.URI;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.uade.tpo.Marketplace.Exceptions.CategoryDuplicateException;
+import com.uade.tpo.Marketplace.entity.dtos.CategoryCreateDTO;
+import com.uade.tpo.Marketplace.entity.dtos.CategoryResponseDTO;
+import com.uade.tpo.Marketplace.service.CategoryService;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("api/categories")
+public class CategoriesControllers {
+    @Autowired
+    private CategoryService categoryService;
+
+    @GetMapping
+  public List<CategoryResponseDTO> list() { return categoryService.findAll(); }
+
+  @GetMapping("/{id}")
+  public CategoryResponseDTO get(@PathVariable Long id) { return categoryService.findById(id); }
+
+  @PreAuthorize("hasAuthority('ADMIN')")
+  @PostMapping
+  public ResponseEntity<CategoryResponseDTO> create(@Valid @RequestBody CategoryCreateDTO dto)
+      throws CategoryDuplicateException {
+    var created = categoryService.create(dto);
+    return ResponseEntity.created(URI.create("/api/categories/" + created.id())).body(created);
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> delete(@PathVariable Long id) {
+    categoryService.delete(id);
+    return ResponseEntity.noContent().build();
+  }
+}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/controllers/AuthenticationController.java -----
+package com.uade.tpo.Marketplace.controllers;
+
+import com.uade.tpo.Marketplace.Auth.AuthenticationRequest;
+import com.uade.tpo.Marketplace.Auth.AuthenticationResponse;
+import com.uade.tpo.Marketplace.Auth.RegisterRequest;
+import com.uade.tpo.Marketplace.entity.dtos.UserResponseDTO;
+import com.uade.tpo.Marketplace.service.AuthenticationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.uade.tpo.Marketplace.service.UserService;
+import org.springframework.security.core.Authentication;
+
+
+@RestController
+@RequestMapping("/api/v1/auth")
+public class AuthenticationController {
+
+  @Autowired
+  private AuthenticationService service;
+
+  @Autowired
+  private UserService userService;
+
+  @PostMapping("/register")
+  public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest req) {
+    return ResponseEntity.ok(service.register(req));
+  }
+
+  @PostMapping("/authenticate")
+  public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest req) {
+    return ResponseEntity.ok(service.authenticate(req));
+  }
+
+  // NUEVO: devuelve el usuario logueado usando el JWT
+  @GetMapping("/me")
+  public ResponseEntity<UserResponseDTO> me(Authentication auth) {
+    if (auth == null || !auth.isAuthenticated()) {
+      // no hay usuario autenticado
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+    // auth.getName() es el "username" -> email en tu app
+    UserResponseDTO dto = userService.findByEmail(auth.getName());
+    return ResponseEntity.ok(dto);
+  }
+  
+}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/controllers/OrderController.java -----
+package com.uade.tpo.Marketplace.controllers;
+
+import java.net.URI;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.uade.tpo.Marketplace.entity.Order;
+import com.uade.tpo.Marketplace.entity.dtos.OrderResponseDTO;
+import com.uade.tpo.Marketplace.service.OrderService;
+
+@RestController
+@RequestMapping("/api/orders")
+public class OrderController {
+
+    @Autowired
+    private OrderService service;
+
+    @GetMapping
+    public List<OrderResponseDTO> list() {
+        return service.findAllDto();
+    }
+    @GetMapping("/mias")
+        public List<OrderResponseDTO> myOrders(org.springframework.security.core.Authentication auth) {
+        return service.findDtosMineByEmail(auth.getName());
+    }
+
+    @GetMapping("/{id}")
+    public OrderResponseDTO get(@PathVariable Long id) {
+        return service.findDtoById(id);
+    }
+
+    @GetMapping("/by-user/{userId}")
+    public List<OrderResponseDTO> byUser(@PathVariable Long userId) {
+        return service.findDtosByUserId(userId);
+    }
+
+    @PostMapping
+    public ResponseEntity<Order> create(@RequestBody Order body) {
+        Order created = service.create(body);
+        return ResponseEntity.created(URI.create("/api/orders/" + created.getId()))
+                             .body(created);
+    }
+}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/controllers/ProductImageController.java -----
+package com.uade.tpo.Marketplace.controllers;
+
+import com.uade.tpo.Marketplace.entity.ProductImage;
+import com.uade.tpo.Marketplace.service.ProductImageService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+
+import java.io.IOException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+
+@RestController
+@RequestMapping("/api/products/{productId}/images")
+public class ProductImageController {
+
+    @Autowired
+    private ProductImageService service;
+
+    @PostMapping
+    public ResponseEntity<ProductImage> upload(@PathVariable Long productId,
+                                               @RequestParam("file") MultipartFile file) throws IOException {
+        return ResponseEntity.ok(service.saveImage(productId, file));
+    }
+
+    @GetMapping("/{imageId}")
+    public ResponseEntity<byte[]> getImage(@PathVariable Long productId, @PathVariable Long imageId) {
+        var image = service.getImage(imageId);
+        return ResponseEntity.ok()
+            .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + image.getFileName() + "\"")
+            .contentType(MediaType.parseMediaType(image.getContentType()))
+            .body(image.getData());
+    }
+
+    @DeleteMapping("/{imageId}")
+    public ResponseEntity<Void> delete(@PathVariable Long imageId) {
+        service.deleteImage(imageId);
+        return ResponseEntity.noContent().build();
+    }
+}
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/controllers/CompraController.java -----
+package com.uade.tpo.Marketplace.controllers;
+import com.uade.tpo.Marketplace.entity.dtos.*;
+import com.uade.tpo.Marketplace.service.CompraService;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import java.net.URI;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/compras")
+public class CompraController {
+    
+  @Autowired 
+  private CompraService compraService;
+
+  @GetMapping("/mias")
+  public List<CompraResponseDTO> myOrders(org.springframework.security.core.Authentication auth) {
+    return compraService.findMineByEmail(auth.getName()); 
+  }
+
+  @GetMapping public List<CompraResponseDTO> list(){ return compraService.findAll(); }
+  @GetMapping("/{id}") public CompraResponseDTO get(@PathVariable Long id){ return compraService.findById(id); }
+
+  @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
+  @PostMapping
+  public ResponseEntity<CompraResponseDTO> create(@Valid @RequestBody CompraCreateDTO dto,
+                                                  org.springframework.security.core.Authentication auth){
+    var c = compraService.createForEmail(auth.getName(), dto);
+    return ResponseEntity.created(URI.create("/api/compras/" + c.id())).body(c);
+  }
+}
+
+----- FILE: ./src/main/java/com/uade/tpo/Marketplace/controllers/UserController.java -----
+package com.uade.tpo.Marketplace.controllers;
+
+import com.uade.tpo.Marketplace.entity.Role;
+
+import com.uade.tpo.Marketplace.service.UserService;
+import com.uade.tpo.Marketplace.entity.dtos.UserCreateDTO;
+import com.uade.tpo.Marketplace.entity.dtos.UserUpdateDTO;
+import com.uade.tpo.Marketplace.entity.dtos.UserResponseDTO;
+
+import jakarta.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/users")
+public class UserController {
+  @Autowired private UserService service;
+
+  @GetMapping
+  public List<UserResponseDTO> list() { return service.findAll(); }
+
+  @GetMapping("/{id}")
+  public UserResponseDTO get(@PathVariable Long id) { return service.findById(id); }
+
+  @GetMapping("/by-email")
+  public UserResponseDTO byEmail(@RequestParam String email) { return service.findByEmail(email); }
+
+  @PostMapping
+  public ResponseEntity<UserResponseDTO> create(@Valid @RequestBody UserCreateDTO body) {
+    var created = service.create(body);
+    return ResponseEntity.created(URI.create("/api/users/" + created.id())).body(created);
+  }
+
+  @PutMapping("/{id}")
+  public UserResponseDTO update(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO body) {
+    return service.update(id, body);
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> delete(@PathVariable Long id) {
+    service.delete(id);
+    return ResponseEntity.noContent().build();
+  }
+
+  @PatchMapping("/{id}/role")
+  public UserResponseDTO changeRole(@PathVariable Long id, @RequestParam Role role) {
+    return service.changeRole(id, role);
+  }
+}
