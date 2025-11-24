@@ -126,6 +126,12 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
+public List<ProductResponseDTO> findAllIncludingInactive() {
+    return repo.findAll().stream().map(this::toDto).toList();
+}
+
+
+    @Transactional(readOnly = true)
     public ProductResponseDTO findById(Long id){
         var p = repo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "El producto no existe: " + id));

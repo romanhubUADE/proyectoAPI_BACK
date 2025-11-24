@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -43,6 +44,15 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ProductResponseDTO get(@PathVariable Long id) { return service.findById(id); }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/admin")
+    public ResponseEntity<Map<String,Object>> listAdmin() {
+        var items = service.findAllIncludingInactive();
+        String msg = items.isEmpty() ? "no hay productos" : "ok";
+        return ResponseEntity.ok(Map.of("message", msg, "data", items));
+}
+
 
     @PostMapping
     public ResponseEntity<ProductResponseDTO> create(@Valid @RequestBody ProductCreateDTO dto)
