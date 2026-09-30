@@ -33,3 +33,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Node (el frontend vive en proyectoAPI_FRONT) ###
+node_modules/
+package.json
+package-lock.json
+
+### macOS ###
+.DS_Store
